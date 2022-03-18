@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/c,c++,cmake,python,macos,linux,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=c,c++,cmake,python,macos,linux,windows
+# Created by https://www.toptal.com/developers/gitignore/api/c,c++,cmake,python,macos,linux,windows,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=c,c++,cmake,python,macos,linux,windows,visualstudiocode
 
 ### C ###
 # Prerequisites
@@ -114,7 +114,8 @@ _deps
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -288,6 +289,27 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# Support for Project snippet scope
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -314,5 +336,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/c,c++,cmake,python,macos,linux,windows
-n
+# End of https://www.toptal.com/developers/gitignore/api/c,c++,cmake,python,macos,linux,windows,visualstudiocode
