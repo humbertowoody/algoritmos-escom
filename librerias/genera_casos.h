@@ -14,5 +14,7 @@
 void aleatorizar_semilla(void);
 int *genera_arreglo_enteros_aleatorios(int, int, int);
 int *genera_arreglo_enteros_ordenados(int);
+int *genera_arreglo_enteros_ordenados_desc(int);
+int *genera_arreglo_enteros_ordenados_esp1(int);
 
 #endif // GENERA_CASOS_H_INCLUIDO

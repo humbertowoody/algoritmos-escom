@@ -58,6 +58,56 @@ int *genera_arreglo_enteros_ordenados(int tamano_arreglo)
 }
 
 /**
+ * @brief Genera un arreglo de números ordenados de forma descendente.
+ *
+ * @param tamano_arreglo El tamaño del arreglo a generar.
+ * @return int* Un arreglo de tamaño tamano_arreglo con números ordenados de forma descendente.
+ */
+int *genera_arreglo_enteros_ordenados_desc(int tamano_arreglo)
+{
+  // Asignación del arreglo.
+  int *arreglo = (int *)malloc(sizeof(int) * tamano_arreglo);
+
+  // Asignación de valores ordenados.
+  for (int i = 0; i < tamano_arreglo; i++)
+  {
+    arreglo[i] = tamano_arreglo - i;
+  }
+
+  // Retorno del arreglo.
+  return arreglo;
+}
+
+/**
+ * @brief Genera un arreglo de enteros ordenados ascendentemente donde los números se repiten
+ *        la cantidad de veces dada por el número en cuestión, es decir, el 1 una vez, el 2
+ *        dos veces, etc.
+ *
+ * @param tamano_arreglo El tamaño del arreglo a generar.
+ * @return int* El arreglo con la serie definida anteriormente.
+ */
+int *genera_arreglo_enteros_ordenados_esp1(int tamano_arreglo)
+{
+  // Asignación del arreglo
+  int *arreglo = (int *)malloc(sizeof(int) * tamano_arreglo);
+
+  // Asignación de valores
+  for (int i = 0, num = 1, nums = 0; i < tamano_arreglo; i++, nums++)
+  {
+    if (nums == num)
+    {
+      num += 1;
+      nums = 0;
+    }
+
+    arreglo[i] = num;
+  }
+
+  // Retorno del arreglo
+  return arreglo;
+}
+
+/**
  * @brief Utiliza el tiempo actual del CPU para generar una semilla para la función rand().
  *
  */
