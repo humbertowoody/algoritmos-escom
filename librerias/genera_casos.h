@@ -11,6 +11,7 @@
 #ifndef GENERA_CASOS_H_INCLUIDO
 #define GENERA_CASOS_H_INCLUIDO
 
+// Prototipos de funciones de la librería.
 void aleatorizar_semilla(void);
 int *genera_arreglo_enteros_aleatorios(int, int, int);
 int *genera_arreglo_enteros_ordenados(int);

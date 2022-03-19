@@ -1,7 +1,7 @@
 /**
- * @file codigo_4.c
+ * @file codigo_5.c
  * @author Humberto Alejandro Ortega Alcocer (humbertoalejandroortegalcocer@gmail.com)
- * @brief Ejercicio 4, Código 4: Simulación de mejor, peor y caso medio.
+ * @brief Ejercicio 4, Código 5: Simulación de mejor, peor y caso medio.
  * @version 0.1
  * @date 2022-03-18
  *
@@ -42,7 +42,7 @@ int main(void)
   printf("caso,iteración,n,ops_asignacion,ops_comparacion,ops_aritmética,ops_totales,modelo_matemático\n");
 
   // Mejor caso
-  // Cuando el arreglo está ordenado ascendentemente.
+  // O(n)
   for (int i = 0; i < NUM_PRUEBAS; i++)
   {
     int *arreglo = genera_arreglo_enteros_ordenados(NUM_ELEMENTOS);
@@ -58,10 +58,10 @@ int main(void)
   }
 
   // Peor caso
-  // Cuando el arreglo cuenta con los números repetidos en el mismo orden.
+  // O(n)
   for (int i = 0; i < NUM_PRUEBAS; i++)
   {
-    int *arreglo = genera_arreglo_enteros_ordenados_esp1(NUM_ELEMENTOS);
+    int *arreglo = genera_arreglo_enteros_ordenados_desc(NUM_ELEMENTOS);
     inicializa_cont_operaciones(&operaciones);
     algoritmo(arreglo, NUM_ELEMENTOS, &operaciones);
     // Imprimmos la fila CSV.
@@ -70,7 +70,7 @@ int main(void)
   }
 
   // Caso medio.
-  // Cuando los números están aleatorizados dentro del arreglo.
+  // O(n) 
   for (int i = 0; i < NUM_PRUEBAS; i++)
   {
     int *arreglo = genera_arreglo_enteros_aleatorios(NUM_ELEMENTOS, 0, NUM_ELEMENTOS);
@@ -95,35 +95,20 @@ int main(void)
 int algoritmo(int *arreglo, int tamano_arreglo, cont_operaciones *operaciones)
 {
   // Declaración de variables.
-  int i, j, f = 0, num;
+  int Z = 1, // se elige este valor porque no se conoce el contexto completo del algoritmo.
+      polinomio = 0,
+      i;
 
-  // Implementación del algoritmo.
-
-  for (i = 0; i < tamano_arreglo; i++)
+  // Ejecución del algoritmo.
+  for(i = 0; i < tamano_arreglo; i++)
   {
-    int ntemp = arreglo[i];
-    int ftemp = 0;
-
-    for (j = 0; j < tamano_arreglo; j++)
-    {
-      if (ntemp == arreglo[j])
-      {
-        ftemp++;
-        operaciones->aritmeticas++; // El incremento de ftemp.
-      }
-      operaciones->comparaciones++; // La comparación del if.
-    }
-
-    if (f < ftemp)
-    {
-      f = ftemp;
-      num = ntemp;
-      operaciones->asignaciones += 2; // Las asignaciones.
-    }
-    operaciones->comparaciones++; // La comparación del if.
+    polinomio = polinomio * Z + arreglo[tamano_arreglo - i];
+    operaciones->asignaciones++; // la asignación de la operación anterior.
+                                 // se desprecian las aritméticas a fines del cálculo en cuestión.
   }
 
-  return f + num;
+  // Regresamos el resultado.
+  return polinomio;
 }
 
 /**
@@ -133,7 +118,7 @@ int algoritmo(int *arreglo, int tamano_arreglo, cont_operaciones *operaciones)
  */
 int modelo_mejor_caso(int n)
 {
-  return (int)floor(pow(n, 2) + n);
+  return n; 
 }
 
 /**
@@ -143,7 +128,7 @@ int modelo_mejor_caso(int n)
  */
 int modelo_peor_caso(int n)
 {
-  return (int)floor((2 * pow(n, 2)) + (3 * n));
+  return n;
 }
 
 /**
@@ -153,5 +138,5 @@ int modelo_peor_caso(int n)
  */
 int modelo_caso_medio(int n)
 {
-  return (int)floor(((3 * pow(n, 2)) + (4 * n)) / 2);
+  return n;
 }

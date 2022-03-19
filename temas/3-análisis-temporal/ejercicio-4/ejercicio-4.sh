@@ -9,6 +9,8 @@ make;
 ./codigo_2.out >codigo_2.csv;
 ./codigo_3.out >codigo_3.csv;
 ./codigo_4.out >codigo_4.csv;
+./codigo_5.out >codigo_5.csv;
 
 # Eliminamos binarios y archivos objetos.
 make clean;
+
