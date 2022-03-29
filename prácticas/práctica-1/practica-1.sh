@@ -14,7 +14,7 @@ ARCHIVO_10_MILLONES_DE_NUMEROS=10_millones_numeros.txt
 
 # Bandera para indicar si queremos una ejecución en paralelo (resultados no
 # válidos pero excelente para hacer pruebas).
-EJECUCION_EN_PARALELO=false
+EJECUCION_EN_PARALELO=true
 
 # Nombre del programa para hacer "timeout", es decir, que cuide que si nuestro
 # binario toma más de X tiempo, lo finaliza.
@@ -26,7 +26,7 @@ EJECUCION_EN_PARALELO=false
 PROGRAMA_TIMEOUT=gtimeout
 
 # Máximo tiempo de ejecución por programa.
-TIEMPO_TIMEOUT=1s
+TIEMPO_TIMEOUT=1h
 
 # Índices de los algoritmos disponibles en el programa.
 ALGORITMOS=(
@@ -44,26 +44,27 @@ ALGORITMOS=(
 
 # Arreglo con los valores de n para probar.
 VALORES_N=(
-  100
-  1000
-  5000
-  10000
-  50000
-  100000
-  200000
-  400000
-  600000
-  #800000
-  #1000000
-  #2000000
-  #3000000
-  #4000000
-  #5000000
-  #6000000
-  #7000000
-  #8000000
-  #9000000
-  #10000000
+  # 100
+  # 1000
+  # 5000
+  # 10000
+  # 50000
+  # 100000
+  # 200000
+  # 400000
+  # 600000
+  # 800000
+  # 1000000
+  # 2000000
+  # 3000000
+  # 4000000
+  # 5000000
+  # 6000000
+  # 7000000
+  # 8000000
+  # 9000000
+  # 10000000
+  500000
 );
 
 # Generamos el nombre del archivo para los resultados.
@@ -87,6 +88,15 @@ echo "algoritmo,n,tiempo_real,tiempo_usuario,tiempo_sistema,tiempo_cpu_wall" >$A
 echo "Inicio de ejecución: $(date)";
 echo "Máximo tiempo de ejecución: $TIEMPO_TIMEOUT";
 echo "Ejecución en paralelo: $EJECUCION_EN_PARALELO";
+echo "Algoritmos a probar:";
+for algoritmo in ${ALGORITMOS[@]}; do
+  echo "\t - $algoritmo";
+done
+echo "Valores de n para probar:";
+for n in ${VALORES_N[@]}; do
+  echo "\t - $n";
+done
+
 
 # Iteramos sobre las n proporcionadas.
 for n in ${VALORES_N[@]}; do

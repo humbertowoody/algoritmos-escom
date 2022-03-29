@@ -84,15 +84,15 @@ void ordenar_burbuja_optimizada_2(int *arreglo, int tamano_arreglo)
       cambios = 1;
 
   // Inicio de algoritmo
-  for(int i = 0; i < (tamano_arreglo-1) && cambios; i++)
+  for (int i = 0; i < (tamano_arreglo - 1) && cambios; i++)
   {
     // Cambiamos la bandera.
     cambios = 0;
 
     // Iteramos.
-    for(int j = 0; j < tamano_arreglo - 1 - i; j++)
+    for (int j = 0; j < tamano_arreglo - 1 - i; j++)
     {
-      
+
       // Si el elemento actual es menor que el siguiente, se intercambian los valores.
       if (arreglo[j] > arreglo[j + 1])
       {
@@ -105,11 +105,10 @@ void ordenar_burbuja_optimizada_2(int *arreglo, int tamano_arreglo)
   }
 }
 
-
 /**
  * @brief Ordena un arreglo de números enteros de forma ascendente usando
  *        el algoritmo: "Inserción".
- * 
+ *
  * @param arreglo El arreglo de enteros a ordenar.
  * @param tamano_arreglo El tamaño del arreglo a ordenar.
  */
@@ -138,7 +137,6 @@ void ordenar_insercion(int *arreglo, int tamano_arreglo)
     arreglo[pos_actual] = aux;
   }
 }
-
 
 /**
  * @brief Ordena un arreglo de números enteros de forma ascendente usando
@@ -189,37 +187,37 @@ void ordenar_seleccion(int *arreglo, int tamano_arreglo)
 void ordenar_shell(int *arreglo, int tamano_arreglo)
 {
   // Variables auxiliares.
-  int k = tamano_arreglo/2,
+  int k = tamano_arreglo / 2,
       b,
       aux;
 
   // Iteramos sobre K/2
-  while(k >= 1)
+  while (k >= 1)
   {
     // Empezamos la b en 1.
     b = 1;
 
     // Iteramos mientras la b != 0 (no sucedió ningún intercambio)
-    while(b != 0)
+    while (b != 0)
     {
       // Usamos la b como bandera.
       b = 0;
 
       // Iteramos desde k hasta el fin del arreglo.
-      for(int i = k; i < tamano_arreglo; i++)
+      for (int i = k; i < tamano_arreglo; i++)
       {
         // Realizamos el intercambio en caso de que encontremos un valor apropiado.
-        if (arreglo[i-k]>arreglo[i])
+        if (arreglo[i - k] > arreglo[i])
         {
           aux = arreglo[i];
-          arreglo[i] = arreglo[i-k];
-          arreglo[i-k] = aux;
+          arreglo[i] = arreglo[i - k];
+          arreglo[i - k] = aux;
           b++;
         }
       }
     }
     // Dividimos el rango a la mitad.
-    k = k/2;
+    k = k / 2;
   }
 }
 
@@ -280,19 +278,19 @@ void ordenar_merge(int *arreglo, int inicio, int tamano_arreglo)
  *
  * @param arreglo El arreglo de resultados.
  * @param inicio El inicio del arreglo a tratar.
- * @param punto_medio El punto medio del arreglo a tratar. 
+ * @param punto_medio El punto medio del arreglo a tratar.
  * @param tamano_arreglo El tamaño del arreglo
  */
 void operacion_merge(int *arreglo, int inicio, int punto_medio, int tamano_arreglo)
 {
   // Variables auxiliares
   int l = tamano_arreglo - inicio + 1,
-      i = inicio, 
+      i = inicio,
       j = punto_medio + 1,
       *arreglo_temp;
 
   // Inicializamos el arreglo temporal.
-  arreglo_temp = (int*) malloc(sizeof(int)*l);
+  arreglo_temp = (int *)malloc(sizeof(int) * l);
 
   // Iteramos para crear el nuevo arreglo (ordenado).
   for (int k = 0; k < l; k++)
@@ -328,6 +326,9 @@ void operacion_merge(int *arreglo, int inicio, int punto_medio, int tamano_arreg
   {
     arreglo[r] = arreglo_temp[p];
   }
+
+  // Limpiamos la memoria usada por arreglo_temp
+  free(arreglo_temp);
 }
 
 /**
@@ -468,4 +469,3 @@ void ordenar_heap(int *arreglo, int tamano_arreglo)
     }
   }
 }
-
