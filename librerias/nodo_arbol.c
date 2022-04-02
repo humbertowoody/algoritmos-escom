@@ -45,20 +45,19 @@ nodo_arbol *insertar_en_arbol(nodo_arbol *raiz, int dato)
   }
 
   // En otro caso, insertamos en la posición correcta dentro del árbol.
-  if (dato < raiz->dato)
+  if (dato <= raiz->dato)
   {
     // Si el dato nuevo es menor al dato en el nodo actual, lo colocamos en el 
     // nodo izquierdo.
     raiz->izq = insertar_en_arbol(raiz->izq, dato);
   }
-  else if (dato > raiz->dato)
+  else
   {
 
     // Si el dato nuevo es mayor al dato en el nodo actual, lo colocamos en el
     // nodo derecho.
     raiz->der = insertar_en_arbol(raiz->der, dato);
   }
-  // No hay else porque si es igual... lo ignoramos (?).
   
   // Regresamos el apuntador a la raiz.
   return raiz;
