@@ -22,6 +22,9 @@
 // Función principal.
 int main(void)
 {
+  // Lo primero es aleatorizar la semilla para que sean números aleatorios.
+  aleatorizar_semilla();
+
   // Variables locales.
   int *desordenados = genera_arreglo_enteros_aleatorios(NUM_ELEMENTOS, 0, NUM_ELEMENTOS + 1),
       *ordenados_ref = crear_arreglo(NUM_ELEMENTOS),
