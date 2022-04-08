@@ -17,11 +17,20 @@
 #include <stdlib.h>
 
 // Constante con el número de elementos para las pruebas.
-#define NUM_ELEMENTOS 10000
+#define NUM_ELEMENTOS_DEFAULT 30000
 
 // Función principal.
-int main(void)
+int main(int argc, char *argv[])
 {
+  // Generamos la variable con el número de elementos.
+  int NUM_ELEMENTOS = NUM_ELEMENTOS_DEFAULT;
+
+  // Vemos si existe el argumento de valores.
+  if (argc == 2)
+  {
+    NUM_ELEMENTOS = atoi(argv[1]);
+  }
+
   // Lo primero es aleatorizar la semilla para que sean números aleatorios.
   aleatorizar_semilla();
 

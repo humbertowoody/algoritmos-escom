@@ -11,6 +11,9 @@ CFLAGS=-Wall -Wextra -Wpedantic
 #LDFLAGS=-lncurses -lpthread
 LDFLAGS=
 
+# Default números de pruebas.
+NUM_PRUEBA_DEFAULT=100
+
 # Binarios para cada código de la práctica.
 ALGORITMOS_ORDENAMIENTO=algoritmos_ordenamiento.out
 ALGORITMOS_ORDENAMIENTO_OBJS=algoritmos_ordenamiento.o librerias/tiempo.o librerias/ordenamientos.o librerias/nodo_arbol.o
@@ -30,7 +33,7 @@ $(TEST_ORDENAMIENTOS): $(TEST_ORDENAMIENTOS_OBJS)
 
 # Ejecutar los tests.
 tests: $(TEST_ORDENAMIENTOS)
-	./$(TEST_ORDENAMIENTOS)
+	./$(TEST_ORDENAMIENTOS) $(NUM_PRUEBA_DEFAULT)
 
 # Limpiar.
 clean:
