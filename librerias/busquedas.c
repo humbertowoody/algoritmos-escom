@@ -11,7 +11,35 @@
 #include "busquedas.h"
 #include "nodo_arbol.h"
 #include "matematicas.h"
+#include "arreglo.h"
 #include <stdlib.h>
+#include <pthread.h>
+
+/**
+ * @brief Si no está definido el número máximo de hilos, se define a 5 por defecto.
+ *        Esto pues 5 es múltiplo de los tamaños de arreglo que se plantean en los
+ *       ejemplos.
+ */
+#ifndef NUMERO_MAXIMO_HILOS
+#define NUMERO_MAXIMO_HILOS 5
+#endif // NUMERO_MAXIMO_HILOS
+
+// Estructura para almacenar los datos de los hilos.
+typedef struct
+{
+  int *arreglo;
+  int num_elementos;
+  int elemento_buscado;
+} datos_hilo;
+
+// Estructura para almacenar los resultados de los hilos.
+typedef struct
+{
+  int indice;
+} resultado_hilo;
+
+// Prototipos de funciones.
+void *busqueda_lineal_hilo(void *);
 
 /**
  * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
@@ -21,7 +49,7 @@
  * @param arreglo El arreglo para realizar la búsqueda.
  * @param tamanio El tamaño del arreglo dónde realizar la búsqueda.
  * @param elemento El elemento que estamos buscando.
- * @return El índice del elemento encontrado, -1 si no se encontró.
+ * @return int El índice del elemento encontrado, -1 si no se encontró.
  */
 int busqueda_lineal_i(int *arreglo, int tamanio, int elemento)
 {
@@ -36,6 +64,78 @@ int busqueda_lineal_i(int *arreglo, int tamanio, int elemento)
 
   // El elemento no se encuentra dentro del arreglo.
   return -1;
+}
+
+/**
+ * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
+ *        elemento sea encontrado, regresa el índice de su posición dentro del
+ *       arreglo. Implementación iterativa en paralelo.
+ *
+ *
+ * @param arreglo El arreglo para realizar la búsqueda.
+ * @param tamanio El tamaño del arreglo dónde realizar la búsqueda.
+ * @param elemento El elemento que estamos buscando.
+ * @return int El índice del elemento encontrado, -1 si no se encontró.
+ */
+int busqueda_lineal_i_p(int *arreglo, int tamanio, int elemento)
+{
+  // Variables locales.
+  pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
+  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
+
+  // Iniciamos el arreglo de hilos.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Asignamos datos para hilos.
+    datos_para_los_hilos[i].arreglo = crear_arreglo(tamanio_sub_arreglos);
+    datos_para_los_hilos[i].num_elementos = tamanio_sub_arreglos;
+    datos_para_los_hilos[i].elemento_buscado = elemento;
+
+    // Copiamos los datos en el subarreglo.
+    copiar_arreglo_rango(arreglo, datos_para_los_hilos[i].arreglo, i * tamanio_sub_arreglos, (i + 1) * tamanio_sub_arreglos);
+
+    // Creamos el hilo.
+    pthread_create(&hilos[i], NULL, busqueda_lineal_hilo, (void *)&datos_para_los_hilos[i]);
+  }
+
+  // Esperamos a que todos los hilos terminen.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Esperamos a que el hilo en cuestión termine.
+    pthread_join(hilos[i], (void *)&resultados_hilos[i]);
+
+    // Verificamos si el hilo encontró el elemento.
+    if (resultados_hilos[i]->indice != -1)
+    {
+      // Ajustamos el índice del elemento encontrado.
+      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+    }
+  }
+
+  // El elemento no se encuentra dentro del arreglo.
+  return -1;
+}
+
+/**
+ * @brief Función que se ejecuta en paralelo para buscar un elemento dentro de un
+ *       arreglo.
+ *
+ * @param datos Los datos para el hilo de ejecución del algoritmo de búsqueda lineal iterativa.
+ * @return void* El índice resultante del algoritmo.
+ */
+void *busqueda_lineal_hilo(void *datos)
+{
+  // Obtenemos los datos del hilo.
+  datos_hilo *d = (datos_hilo *)datos;
+  resultado_hilo *resultado = (resultado_hilo *)malloc(sizeof(resultado_hilo));
+
+  // Buscamos el elemento dentro del arreglo.
+  resultado->indice = busqueda_lineal_i(d->arreglo, d->num_elementos, d->elemento_buscado);
+
+  // Regresamos el índice del elemento encontrado.
+  return (void *)resultado;
 }
 
 /**

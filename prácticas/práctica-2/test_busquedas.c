@@ -21,9 +21,9 @@
 
 // Prototipos de funciones.
 int prueba_busqueda_lineal(int *, int, int);
-// int prueba_busqueda_lineal_p(int*,int);
+int prueba_busqueda_lineal_p(int *, int, int);
 int prueba_busqueda_abb(int *, int, int);
-// int prueba_busqueda_abb_p(int*,int);
+// int prueba_busqueda_abb_p(int*, int, int);
 int prueba_busqueda_binaria(int *, int, int);
 // int prueba_busqueda_binaria_p(int*, int, int);
 int prueba_busqueda_exponencial(int *, int, int);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 
   // Algoritmos que no requieren que los elementos estén ordenados.
   printf("\t- Búsqueda Lineal: %s\n", prueba_busqueda_lineal(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
-  // printf("\t- Búsqueda Lineal (paralelizada): %s\n", prueba_busqueda_lineal_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  printf("\t- Búsqueda Lineal (paralelizada): %s\n", prueba_busqueda_lineal_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda en ABB: %s\n", prueba_busqueda_abb(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   // printf("\t- Búsqueda en ABB (paralelizada): %s\n", prueba_busqueda_abb_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
 
@@ -96,6 +96,26 @@ int prueba_busqueda_lineal(int *arreglo, int tamanio, int elemento)
 
   // Realizamos la búsqueda.
   resultado_temp = busqueda_lineal_i(arreglo, tamanio, elemento);
+
+  // Comparamos neustro resultado obtenido.
+  return resultado_temp >= 0 && arreglo[resultado_temp] == elemento;
+}
+
+/**
+ * @brief Realiza la prueba del algoritmo de búsqueda lineal en paralelo.
+ *
+ * @param arreglo El arreglo con números desordenados para relaizar la búsqueda.
+ * @param tamanio El tamaño del arreglo para realizar la búsqueda.
+ * @param elemento El elemento a buscar.
+ * @return int 1 si funciona, 0 si no funciona.
+ */
+int prueba_busqueda_lineal_p(int *arreglo, int tamanio, int elemento)
+{
+  // Variables locales.
+  int resultado_temp;
+
+  // Realizamos la búsqueda.
+  resultado_temp = busqueda_lineal_i_p(arreglo, tamanio, elemento);
 
   // Comparamos neustro resultado obtenido.
   return resultado_temp >= 0 && arreglo[resultado_temp] == elemento;

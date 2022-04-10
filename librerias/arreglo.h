@@ -16,5 +16,6 @@ void imprimir_arreglo(int *, int);
 int arreglos_iguales(int *, int *, int);
 void copiar_arreglo(int *, int *, int);
 int *crear_arreglo(int);
+void copiar_arreglo_rango(int *, int *, int, int);
 
 #endif // ARREGLO_H_INCLUIDO

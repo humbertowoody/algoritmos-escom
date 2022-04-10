@@ -69,6 +69,24 @@ void copiar_arreglo(int *origen, int *destino, int tamanio)
 }
 
 /**
+ * @brief Copia los contenidos de un arreglo en otro, en un rango específico.
+ *       Este método es útil para copiar un subarreglo.
+ *
+ * @param origen Arreglo origen.
+ * @param destino Arreglo destino.
+ * @param inicio Índice inicial del rango.
+ * @param fin Índice final del rango.
+ */
+void copiar_arreglo_rango(int *origen, int *destino, int inicio, int fin)
+{
+  // Iteramos sobre los elementos del arreglo.
+  for (int i = inicio, j = 0; i < fin; i++, j++)
+  {
+    destino[j] = origen[i];
+  }
+}
+
+/**
  * @brief Crea un nuevo arreglo de forma dinámica para N elementos.
  *
  * @param tamanio El número de elementos para el arreglo.
