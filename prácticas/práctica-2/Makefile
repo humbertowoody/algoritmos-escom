@@ -8,15 +8,14 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic
 
 # Configuración del linker.
-#LDFLAGS=-lncurses -lpthread
-LDFLAGS=
+LDFLAGS=-lpthread
 
 # Default números de pruebas.
 NUM_PRUEBA_DEFAULT=100
 
 # Binarios para cada código de la práctica.
 ALGORITMOS_BUSQUEDA=algoritmos_busqueda.out
-ALGORITMOS_BUSQUEDA_OBJS=algoritmos_busqueda.o librerias/matematicas.o librerias/tiempo.o librerias/busquedas.o librerias/ordenamientos.o librerias/nodo_arbol.o
+ALGORITMOS_BUSQUEDA_OBJS=algoritmos_busqueda.o librerias/arreglo.o librerias/matematicas.o librerias/tiempo.o librerias/busquedas.o librerias/ordenamientos.o librerias/nodo_arbol.o
 TEST_BUSQUEDAS=test_busquedas.out
 TEST_BUSQUEDAS_OBJS=test_busquedas.o librerias/matematicas.o librerias/tiempo.o librerias/busquedas.o librerias/ordenamientos.o librerias/nodo_arbol.o librerias/genera_casos.o librerias/arreglo.o
 

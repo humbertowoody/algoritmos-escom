@@ -1,7 +1,7 @@
 /**
  * @file test_busquedas.c
  * @author Humberto Alejandro Ortega Alcocer (humbertoalejandroortegalcocer@gmail.com)
- * @brief Pruebas para los algoritmos de búsquedas. 
+ * @brief Pruebas para los algoritmos de búsquedas.
  * @version 0.1
  * @date 2022-04-07
  *
@@ -20,13 +20,16 @@
 #define NUM_ELEMENTOS_DEFAULT 30000
 
 // Prototipos de funciones.
-int prueba_busqueda_lineal(int*, int, int);
+int prueba_busqueda_lineal(int *, int, int);
 // int prueba_busqueda_lineal_p(int*,int);
-int prueba_busqueda_abb(int*, int, int);
+int prueba_busqueda_abb(int *, int, int);
 // int prueba_busqueda_abb_p(int*,int);
-int prueba_busqueda_binaria(int*, int, int);
-int prueba_busqueda_exponencial(int*, int, int);
-int prueba_busqueda_fibonacci(int*, int, int);
+int prueba_busqueda_binaria(int *, int, int);
+// int prueba_busqueda_binaria_p(int*, int, int);
+int prueba_busqueda_exponencial(int *, int, int);
+// int prueba_busqueda_exponencial_p(int*, int, int);
+int prueba_busqueda_fibonacci(int *, int, int);
+// int prueba_busqueda_fibonacci_p(int*, int, int);
 
 // Función principal
 int main(int argc, char *argv[])
@@ -62,12 +65,17 @@ int main(int argc, char *argv[])
 
   // Algoritmos que no requieren que los elementos estén ordenados.
   printf("\t- Búsqueda Lineal: %s\n", prueba_busqueda_lineal(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  // printf("\t- Búsqueda Lineal (paralelizada): %s\n", prueba_busqueda_lineal_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda en ABB: %s\n", prueba_busqueda_abb(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  // printf("\t- Búsqueda en ABB (paralelizada): %s\n", prueba_busqueda_abb_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
 
   // Algoritmos que requieren que los elementos estén ordenados.
   printf("\t- Búsqueda Binaria: %s\n", prueba_busqueda_binaria(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  // printf("\t- Búsqueda Binaria (paralelizada): %s\n", prueba_busqueda_binaria_p(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda Exponencial: %s\n", prueba_busqueda_exponencial(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  // printf("\t- Búsqueda Exponencial (paralelizada): %s\n", prueba_busqueda_exponencial_p(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda Fibonacci: %s\n", prueba_busqueda_fibonacci(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  // printf("\t- Búsqueda Fibonacci (paralelizada): %s\n", prueba_busqueda_fibonacci_p(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
 
   // Fin de ejecución de pruebas.
   return EXIT_SUCCESS;
@@ -85,7 +93,7 @@ int prueba_busqueda_lineal(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
   int resultado_temp;
-  
+
   // Realizamos la búsqueda.
   resultado_temp = busqueda_lineal_i(arreglo, tamanio, elemento);
 
@@ -179,4 +187,3 @@ int prueba_busqueda_fibonacci(int *arreglo, int tamanio, int elemento)
   // Comparamos nuestro resultado obtenido.
   return resultado_temp >= 0 && arreglo[resultado_temp] == elemento;
 }
-

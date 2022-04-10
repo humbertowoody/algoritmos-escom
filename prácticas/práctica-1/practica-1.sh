@@ -121,7 +121,7 @@ for n in ${VALORES_N[@]}; do
         # Ejecutamos cada algoritmo de forma secuencial.
         echo "Ejecutando algoritmo: \"$alg\" ($(date))";
         $PROGRAMA_TIMEOUT $TIEMPO_TIMEOUT ./$EJECUTABLE $alg $n <$ARCHIVO_10_MILLONES_DE_NUMEROS >>$ARCHIVO_CSV || { echo "Timeout para \"$alg\" en complejidad: $n ($(date))" && timeouts[$alg]=true; };
-     fi
+      fi
     else
       echo "Saltando algoritmo: \"$alg\" para n=$n por timeout previo.";
     fi
