@@ -30,6 +30,8 @@ typedef struct
   int *arreglo;
   int num_elementos;
   int elemento_buscado;
+  int inicio;
+  int fin;
 } datos_hilo;
 
 // Estructura para almacenar los resultados de los hilos.
@@ -40,6 +42,9 @@ typedef struct
 
 // Prototipos de funciones.
 void *busqueda_lineal_hilo(void *);
+void *busqueda_binaria_hilo(void *);
+void *busqueda_exponencial_hilo(void *);
+void *busqueda_fibonacci_hilo(void *);
 
 /**
  * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
@@ -129,6 +134,8 @@ void *busqueda_lineal_hilo(void *datos)
 {
   // Obtenemos los datos del hilo.
   datos_hilo *d = (datos_hilo *)datos;
+
+  // Creamos la estructura para almacenar el resultado del hilo.
   resultado_hilo *resultado = (resultado_hilo *)malloc(sizeof(resultado_hilo));
 
   // Buscamos el elemento dentro del arreglo.
@@ -180,6 +187,82 @@ int busqueda_binaria_i(int *arreglo, int inicio, int fin, int elemento)
   // Si salimos del ciclo y no encontramos el elemento, el elemento no existe
   // en el arreglo.
   return -1;
+}
+
+/**
+ * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
+ *        elemento sea encontrado, regresa el índice de su posición dentro del
+ *       arreglo. Implementación iterativa en paralelo.
+ *
+ *
+ * @param arreglo El arreglo para realizar la búsqueda.
+ * @param inicio La posicion inicial en el arreglo.
+ * @param fin La posicion final en el arreglo.
+ * @param elemento El elemento que estamos buscando.
+ * @return int El índice del elemento encontrado, -1 si no se encontró.
+ */
+int busqueda_binaria_i_p(int *arreglo, int inicio, int fin, int elemento)
+{
+  // Variables locales.
+  pthread_t hilos[NUMERO_MAXIMO_HILOS];                  // Arreglo de hilos.
+  int tamanio_sub_arreglos = fin / NUMERO_MAXIMO_HILOS;  // Tamaño de los subarreglos.
+  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS]; // Arreglo de resultados de los hilos.
+  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];  // Datos para los hilos.
+
+  // Iniciamos el arreglo de hilos.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Asignamos datos para hilos.
+    datos_para_los_hilos[i].arreglo = crear_arreglo(tamanio_sub_arreglos);
+    datos_para_los_hilos[i].inicio = 0;
+    datos_para_los_hilos[i].fin = tamanio_sub_arreglos;
+    datos_para_los_hilos[i].elemento_buscado = elemento;
+
+    // Copiamos los datos en el subarreglo.
+    copiar_arreglo_rango(arreglo, datos_para_los_hilos[i].arreglo, i * tamanio_sub_arreglos, (i + 1) * tamanio_sub_arreglos);
+
+    // Creamos el hilo.
+    pthread_create(&hilos[i], NULL, busqueda_binaria_hilo, (void *)&datos_para_los_hilos[i]);
+  }
+
+  // Esperamos a que todos los hilos terminen.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Esperamos a que el hilo en cuestión termine.
+    pthread_join(hilos[i], (void *)&resultados_hilos[i]);
+
+    // Verificamos si el hilo encontró el elemento.
+    if (resultados_hilos[i]->indice != -1)
+    {
+      // Ajustamos el índice del elemento encontrado.
+      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+    }
+  }
+
+  // El elemento no se encuentra dentro del arreglo.
+  return -1;
+}
+
+/**
+ * @brief Función que se ejecuta en paralelo para buscar un elemento dentro de un
+ *       arreglo.
+ *
+ * @param datos Los datos para el hilo de ejecución del algoritmo de búsqueda binaria iterativa.
+ * @return void* El índice resultante del algoritmo.
+ */
+void *busqueda_binaria_hilo(void *datos)
+{
+  // Obtenemos los datos del hilo.
+  datos_hilo *d = (datos_hilo *)datos;
+
+  // Creamos la estructura para almacenar el resultado del hilo.
+  resultado_hilo *resultado = (resultado_hilo *)malloc(sizeof(resultado_hilo));
+
+  // Buscamos el elemento dentro del arreglo.
+  resultado->indice = busqueda_binaria_i(d->arreglo, d->inicio, d->fin, d->elemento_buscado);
+
+  // Regresamos el índice del elemento encontrado.
+  return (void *)resultado;
 }
 
 /**
@@ -320,6 +403,80 @@ int busqueda_exponencial_i(int *arreglo, int tamanio, int elemento)
 }
 
 /**
+ * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
+ *        elemento sea encontrado, regresa el índice de su posición dentro del
+ *       arreglo. Implementación iterativa en paralelo.
+ *
+ *
+ * @param arreglo El arreglo para realizar la búsqueda.
+ * @param tamanio El tamaño del arreglo para realizar la búsqueda.
+ * @param elemento El elemento que estamos buscando.
+ * @return int El índice del elemento encontrado, -1 si no se encontró.
+ */
+int busqueda_exponencial_i_p(int *arreglo, int tamanio, int elemento)
+{
+  // Variables locales.
+  pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
+  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
+
+  // Iniciamos el arreglo de hilos.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Asignamos datos para hilos.
+    datos_para_los_hilos[i].arreglo = crear_arreglo(tamanio_sub_arreglos);
+    datos_para_los_hilos[i].num_elementos = tamanio_sub_arreglos;
+    datos_para_los_hilos[i].elemento_buscado = elemento;
+
+    // Copiamos los datos en el subarreglo.
+    copiar_arreglo_rango(arreglo, datos_para_los_hilos[i].arreglo, i * tamanio_sub_arreglos, (i + 1) * tamanio_sub_arreglos);
+
+    // Creamos el hilo.
+    pthread_create(&hilos[i], NULL, busqueda_exponencial_hilo, (void *)&datos_para_los_hilos[i]);
+  }
+
+  // Esperamos a que todos los hilos terminen.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Esperamos a que el hilo en cuestión termine.
+    pthread_join(hilos[i], (void *)&resultados_hilos[i]);
+
+    // Verificamos si el hilo encontró el elemento.
+    if (resultados_hilos[i]->indice != -1)
+    {
+      // Ajustamos el índice del elemento encontrado.
+      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+    }
+  }
+
+  // El elemento no se encuentra dentro del arreglo.
+  return -1;
+}
+
+/**
+ * @brief Función que se ejecuta en paralelo para buscar un elemento dentro de un
+ *       arreglo.
+ *
+ * @param datos Los datos para el hilo de ejecución del algoritmo de búsqueda exponencial iterativa.
+ * @return void* El índice resultante del algoritmo.
+ */
+void *busqueda_exponencial_hilo(void *datos)
+{
+  // Obtenemos los datos del hilo.
+  datos_hilo *d = (datos_hilo *)datos;
+
+  // Creamos la estructura para almacenar el resultado del hilo.
+  resultado_hilo *resultado = (resultado_hilo *)malloc(sizeof(resultado_hilo));
+
+  // Buscamos el elemento dentro del arreglo.
+  resultado->indice = busqueda_exponencial_i(d->arreglo, d->num_elementos, d->elemento_buscado);
+
+  // Regresamos el índice del elemento encontrado.
+  return (void *)resultado;
+}
+
+/**
  * @brief Busca un entero dentro de un arreglo de enteros *ordenado* y, en caso
  *        de que el elemento sea encontrado, regresa el índice de su posición
  *        dentro del arreglo. Implementación iterativa.
@@ -387,4 +544,78 @@ int busqueda_fibonacci_i(int *arreglo, int tamanio, int elemento)
 
   // En cualquier otro caso, el elemento no fue encontrado.
   return -1;
+}
+
+/**
+ * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
+ *        elemento sea encontrado, regresa el índice de su posición dentro del
+ *       arreglo. Implementación iterativa en paralelo.
+ *
+ *
+ * @param arreglo El arreglo para realizar la búsqueda.
+ * @param tamanio El tamaño del arreglo para realizar la búsqueda.
+ * @param elemento El elemento que estamos buscando.
+ * @return int El índice del elemento encontrado, -1 si no se encontró.
+ */
+int busqueda_fibonacci_i_p(int *arreglo, int tamanio, int elemento)
+{
+  // Variables locales.
+  pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
+  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
+
+  // Iniciamos el arreglo de hilos.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Asignamos datos para hilos.
+    datos_para_los_hilos[i].arreglo = crear_arreglo(tamanio_sub_arreglos);
+    datos_para_los_hilos[i].num_elementos = tamanio_sub_arreglos;
+    datos_para_los_hilos[i].elemento_buscado = elemento;
+
+    // Copiamos los datos en el subarreglo.
+    copiar_arreglo_rango(arreglo, datos_para_los_hilos[i].arreglo, i * tamanio_sub_arreglos, (i + 1) * tamanio_sub_arreglos);
+
+    // Creamos el hilo.
+    pthread_create(&hilos[i], NULL, busqueda_fibonacci_hilo, (void *)&datos_para_los_hilos[i]);
+  }
+
+  // Esperamos a que todos los hilos terminen.
+  for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
+  {
+    // Esperamos a que el hilo en cuestión termine.
+    pthread_join(hilos[i], (void *)&resultados_hilos[i]);
+
+    // Verificamos si el hilo encontró el elemento.
+    if (resultados_hilos[i]->indice != -1)
+    {
+      // Ajustamos el índice del elemento encontrado.
+      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+    }
+  }
+
+  // El elemento no se encuentra dentro del arreglo.
+  return -1;
+}
+
+/**
+ * @brief Función que se ejecuta en paralelo para buscar un elemento dentro de un
+ *       arreglo.
+ *
+ * @param datos Los datos para el hilo de ejecución del algoritmo de búsqueda fibonacci iterativa.
+ * @return void* El índice resultante del algoritmo.
+ */
+void *busqueda_fibonacci_hilo(void *datos)
+{
+  // Obtenemos los datos del hilo.
+  datos_hilo *d = (datos_hilo *)datos;
+
+  // Creamos la estructura para almacenar el resultado del hilo.
+  resultado_hilo *resultado = (resultado_hilo *)malloc(sizeof(resultado_hilo));
+
+  // Buscamos el elemento dentro del arreglo.
+  resultado->indice = busqueda_fibonacci_i(d->arreglo, d->num_elementos, d->elemento_buscado);
+
+  // Regresamos el índice del elemento encontrado.
+  return (void *)resultado;
 }

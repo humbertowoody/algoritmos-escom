@@ -14,7 +14,7 @@ ARCHIVO_10_MILLONES_DE_NUMEROS=10_millones_numeros.txt
 
 # Bandera para indicar si queremos una ejecución en paralelo (resultados no
 # válidos pero excelente para hacer pruebas).
-EJECUCION_EN_PARALELO=false
+EJECUCION_EN_PARALELO=true
 
 # Nombre del programa para hacer "timeout", es decir, que cuide que si nuestro
 # binario toma más de X tiempo, lo finaliza.
@@ -27,12 +27,12 @@ EJECUCION_EN_PARALELO=false
 PROGRAMA_TIMEOUT=timeout
 
 # Máximo tiempo de ejecución por programa.
-TIEMPO_TIMEOUT=1s
+TIEMPO_TIMEOUT=10s
 
 # Índices de los algoritmos disponibles en el programa.
 ALGORITMOS=(
   "lineal"
-  #"lineal_p"
+  "lineal_p"
   "abb"
   #"abb_p"
   "binaria"
@@ -46,15 +46,15 @@ ALGORITMOS=(
 # Arreglo con los valores de n para probar.
 VALORES_N=(
   1000000
-  2000000
-  3000000
-  4000000
-  5000000
-  6000000
-  7000000
-  8000000
-  9000000
-  10000000
+  # 2000000
+  # 3000000
+  # 4000000
+  # 5000000
+  # 6000000
+  # 7000000
+  # 8000000
+  # 9000000
+  # 10000000
 );
 
 # Arreglo con los elementos a buscar.
@@ -125,8 +125,6 @@ done
 
 # Iteramos sobre las n proporcionadas.
 for n in ${VALORES_N[@]}; do
-  # Mostramos mensaje.
-  echo "Iniciamos ejecución para n=${n}.";
   # Iteramos sobre los algoritmos seleccionados.
   for alg in ${ALGORITMOS[@]}; do
     # Verificamos si el algoritmo en cuestión ya dió timeout en una iteración 
@@ -134,7 +132,7 @@ for n in ${VALORES_N[@]}; do
     if [ "${timeouts[$alg]}" = false ]; then
       # Iteramos sobre los elementos de búsqueda seleccionados.
       for elemento in ${ELEMENTOS_A_BUSCAR[@]}; do
-        echo "Ejecutando algoritmo: \"$alg\" para búsqueda de: \"$elemento\" ($(date))";
+        echo "Ejecutando algoritmo: \"$alg\" para búsqueda de: \"$elemento\" en $n elementos. ($(date))";
         # Aquí decidimos si queremos ejecutar los algoritmos en paralelo o secuencialmente.
         if [ "$EJECUCION_EN_PARALELO" = true ] ; then
           # Ejecutamos cada algoritmo en el background.

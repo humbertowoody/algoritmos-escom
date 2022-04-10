@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
     break;
 
   case ABB_P:
-    busqueda_abb_i_p(raiz, elemento_busqueda);
+    // busqueda_abb_i_p(raiz, elemento_busqueda);
     break;
 
   case BINARIA:
