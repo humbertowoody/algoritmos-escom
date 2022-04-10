@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     break;
 
   case BINARIA_P:
-    busqueda_binaria_i_p(elementos, 0, numero_elementos, elemento_busqueda);
+    busqueda_binaria_i_p(elementos, numero_elementos, elemento_busqueda);
     break;
 
   case EXPONENCIAL:
@@ -142,6 +142,10 @@ int main(int argc, char *argv[])
 
   // Tomamos la medida del tiempo final.
   guardar_tiempo(&fin);
+
+  // Liberamos la memoria.
+  free(elementos);
+  liberar_arbol(raiz);
 
   // Calculamos los resultados.
   resultados = calcular_resultados(inicio, fin);

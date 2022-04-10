@@ -111,12 +111,18 @@ int busqueda_lineal_i_p(int *arreglo, int tamanio, int elemento)
     // Esperamos a que el hilo en cuestión termine.
     pthread_join(hilos[i], (void *)&resultados_hilos[i]);
 
+    // Limpiamos la memoria de los datos para los hilos.
+    free(datos_para_los_hilos[i].arreglo);
+
     // Verificamos si el hilo encontró el elemento.
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
       return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
+
+    // Limpiamos la memoria de los resultados de los hilos.
+    free(resultados_hilos[i]);
   }
 
   // El elemento no se encuentra dentro del arreglo.
@@ -196,18 +202,17 @@ int busqueda_binaria_i(int *arreglo, int inicio, int fin, int elemento)
  *
  *
  * @param arreglo El arreglo para realizar la búsqueda.
- * @param inicio La posicion inicial en el arreglo.
- * @param fin La posicion final en el arreglo.
+ * @param tamanio El tamaño del arreglo a realizar la búsqueda.
  * @param elemento El elemento que estamos buscando.
  * @return int El índice del elemento encontrado, -1 si no se encontró.
  */
-int busqueda_binaria_i_p(int *arreglo, int inicio, int fin, int elemento)
+int busqueda_binaria_i_p(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
-  pthread_t hilos[NUMERO_MAXIMO_HILOS];                  // Arreglo de hilos.
-  int tamanio_sub_arreglos = fin / NUMERO_MAXIMO_HILOS;  // Tamaño de los subarreglos.
-  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS]; // Arreglo de resultados de los hilos.
-  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];  // Datos para los hilos.
+  pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
+  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
 
   // Iniciamos el arreglo de hilos.
   for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
@@ -231,12 +236,18 @@ int busqueda_binaria_i_p(int *arreglo, int inicio, int fin, int elemento)
     // Esperamos a que el hilo en cuestión termine.
     pthread_join(hilos[i], (void *)&resultados_hilos[i]);
 
+    // Limpiamos la memoria de los datos para los hilos.
+    free(datos_para_los_hilos[i].arreglo);
+
     // Verificamos si el hilo encontró el elemento.
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
       return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
+
+    // Limpiamos la memoria de los resultados de los hilos.
+    free(resultados_hilos[i]);
   }
 
   // El elemento no se encuentra dentro del arreglo.
@@ -442,12 +453,18 @@ int busqueda_exponencial_i_p(int *arreglo, int tamanio, int elemento)
     // Esperamos a que el hilo en cuestión termine.
     pthread_join(hilos[i], (void *)&resultados_hilos[i]);
 
+    // Limpiamos la memoria de los datos para los hilos.
+    free(datos_para_los_hilos[i].arreglo);
+
     // Verificamos si el hilo encontró el elemento.
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
       return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
+
+    // Limpiamos la memoria de los resultados de los hilos.
+    free(resultados_hilos[i]);
   }
 
   // El elemento no se encuentra dentro del arreglo.
@@ -586,12 +603,18 @@ int busqueda_fibonacci_i_p(int *arreglo, int tamanio, int elemento)
     // Esperamos a que el hilo en cuestión termine.
     pthread_join(hilos[i], (void *)&resultados_hilos[i]);
 
+    // Limpiamos la memoria de los datos para los hilos.
+    free(datos_para_los_hilos[i].arreglo);
+
     // Verificamos si el hilo encontró el elemento.
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
       return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
+
+    // Limpiamos la memoria de los resultados de los hilos.
+    free(resultados_hilos[i]);
   }
 
   // El elemento no se encuentra dentro del arreglo.

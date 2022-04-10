@@ -23,5 +23,6 @@ typedef struct nodo_arbol_t
 nodo_arbol *nuevo_nodo(int);
 nodo_arbol *insertar_en_arbol(nodo_arbol *, int);
 void almacenar_recorrido_inorden(nodo_arbol *, int *, int *);
+void liberar_arbol(nodo_arbol *);
 
 #endif // NODO_ARBOL_H_INCLUIDO

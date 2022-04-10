@@ -85,3 +85,22 @@ void almacenar_recorrido_inorden(nodo_arbol *raiz, int *arreglo, int *pos)
     almacenar_recorrido_inorden(raiz->der, arreglo, pos);
   }
 }
+
+/**
+ * @brief Libera la memoria de un árbol binario.
+ *
+ * @param nodo El nodo raíz de un árbol.
+ */
+void liberar_arbol(nodo_arbol *nodo)
+{
+  // Caso base.
+  if (nodo != NULL)
+  {
+    // Primero el izquierdo.
+    liberar_arbol(nodo->izq);
+    // Luego el derecho.
+    liberar_arbol(nodo->der);
+    // Liberamos el nodo.
+    free(nodo);
+  }
+}

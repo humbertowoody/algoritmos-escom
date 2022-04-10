@@ -77,6 +77,10 @@ int main(int argc, char *argv[])
   printf("\t- Búsqueda Fibonacci: %s\n", prueba_busqueda_fibonacci(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda Fibonacci (paralelizada): %s\n", prueba_busqueda_fibonacci_p(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
 
+  // Liberamos la memoria.
+  free(desordenados);
+  free(ordenados);
+
   // Fin de ejecución de pruebas.
   return EXIT_SUCCESS;
 }
@@ -134,6 +138,7 @@ int prueba_busqueda_abb(int *arreglo, int tamanio, int elemento)
   // Variables locales.
   nodo_arbol *raiz = NULL,
              *res;
+  int resultado;
 
   // Insertamos los elementos en nuestro ABB.
   for (int i = 0; i < tamanio; i++)
@@ -144,8 +149,14 @@ int prueba_busqueda_abb(int *arreglo, int tamanio, int elemento)
   // Ejecutamos el algoritmo.
   res = busqueda_abb_i(raiz, elemento);
 
+  // Calculamos resultado.
+  resultado = res != NULL && res->dato == elemento;
+
+  // Liberamos la memoria de nuestros nodos.
+  liberar_arbol(raiz);
+
   // Comparamos nuestro resultado obtenido.
-  return res != NULL && res->dato == elemento;
+  return resultado;
 }
 
 /**
@@ -182,7 +193,7 @@ int prueba_busqueda_binaria_p(int *arreglo, int tamanio, int elemento)
   int resultado_temp;
 
   // Realizamos la búsqueda (asumimos que el arreglo está ordenado).
-  resultado_temp = busqueda_binaria_i_p(arreglo, 0, tamanio, elemento);
+  resultado_temp = busqueda_binaria_i_p(arreglo, tamanio, elemento);
 
   // Comparamos nuestro resultado obtenido.
   return resultado_temp >= 0 && arreglo[resultado_temp] == elemento;
