@@ -242,6 +242,9 @@ void ordenar_tree(int *arreglo, int tamano_arreglo)
   // Almacenamos el recorrido inorden de nuestro ABB.
   int posicion = 0; // La posición inicial del recorrido será 0.
   almacenar_recorrido_inorden(raiz, arreglo, &posicion);
+
+  // Liberamos la memoria del ABB.
+  liberar_arbol(raiz);
 }
 
 /**

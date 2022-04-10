@@ -51,9 +51,8 @@ int main(int argc, char *argv[])
   printf("\t - Tamaño de los arreglos: %i\n", NUM_ELEMENTOS);
   printf("Pruebas:\n");
 
-
   // Iteramos sobre los algoritmos.
-  for(ALGORITMO_ORDENAMIENTO alg = BURBUJA_SIMPLE; alg <= HEAP; alg++)
+  for (ALGORITMO_ORDENAMIENTO alg = BURBUJA_SIMPLE; alg <= HEAP; alg++)
   {
     // Generamos datos.
     copiar_arreglo(desordenados, ordenados, NUM_ELEMENTOS);
@@ -62,64 +61,69 @@ int main(int argc, char *argv[])
     printf("\t- ");
 
     // Elegimos un algoritmo de ordenamiento.
-    switch(alg)
+    switch (alg)
     {
-      case BURBUJA_SIMPLE:
-        printf("Burbuja Simple: ");
-        ordenar_burbuja_simple(ordenados, NUM_ELEMENTOS);
-        break;
+    case BURBUJA_SIMPLE:
+      printf("Burbuja Simple: ");
+      ordenar_burbuja_simple(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case BURBUJA_OPTIMIZADA_1:
-          printf("Burbuja Optimizada 1: ");
-        ordenar_burbuja_optimizada_1(ordenados, NUM_ELEMENTOS);
-        break;
+    case BURBUJA_OPTIMIZADA_1:
+      printf("Burbuja Optimizada 1: ");
+      ordenar_burbuja_optimizada_1(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case BURBUJA_OPTIMIZADA_2:
-        printf("Burbuja Optimizada 2: ");
-        ordenar_burbuja_optimizada_2(ordenados, NUM_ELEMENTOS);
-        break;
+    case BURBUJA_OPTIMIZADA_2:
+      printf("Burbuja Optimizada 2: ");
+      ordenar_burbuja_optimizada_2(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case INSERCION:
-        printf("Inserción: ");
-        ordenar_insercion(ordenados, NUM_ELEMENTOS);
-        break;
+    case INSERCION:
+      printf("Inserción: ");
+      ordenar_insercion(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case SELECCION:
-        printf("Selección: ");
-        ordenar_seleccion(ordenados, NUM_ELEMENTOS);
-        break;
+    case SELECCION:
+      printf("Selección: ");
+      ordenar_seleccion(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case SHELL:
-        printf("Shell: ");
-        ordenar_shell(ordenados, NUM_ELEMENTOS);
-        break;
+    case SHELL:
+      printf("Shell: ");
+      ordenar_shell(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case TREE:
-        printf("Tree: ");
-        ordenar_tree(ordenados, NUM_ELEMENTOS);
-        break;
+    case TREE:
+      printf("Tree: ");
+      ordenar_tree(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case MERGE:
-        printf("Merge: ");
-        ordenar_merge(ordenados, 0, NUM_ELEMENTOS);
-        break;
+    case MERGE:
+      printf("Merge: ");
+      ordenar_merge(ordenados, 0, NUM_ELEMENTOS);
+      break;
 
-      case HEAP:
-        printf("Heap: ");
-        ordenar_heap(ordenados, NUM_ELEMENTOS);
-        break;
+    case HEAP:
+      printf("Heap: ");
+      ordenar_heap(ordenados, NUM_ELEMENTOS);
+      break;
 
-      case QUICK:
-      default:
-        printf("Quick: ");
-        ordenar_quick(ordenados, NUM_ELEMENTOS);
-        break;
+    case QUICK:
+    default:
+      printf("Quick: ");
+      ordenar_quick(ordenados, NUM_ELEMENTOS);
+      break;
     }
 
     // Comparación.
     printf("%s\n", arreglos_iguales(ordenados, ordenados_ref, NUM_ELEMENTOS) == 1 ? "✅" : "❌");
   }
 
+  // Liberamos memoria.
+  free(desordenados);
+  free(ordenados_ref);
+  free(ordenados);
+
+  // Fin de ejecución.
   return EXIT_SUCCESS;
 }
-
