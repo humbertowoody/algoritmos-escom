@@ -19,7 +19,7 @@
 nodo_arbol *nuevo_nodo(int dato)
 {
   // Generamos el nuevo nodo.
-  nodo_arbol *nuevo = (nodo_arbol*) malloc(sizeof(nodo_arbol));
+  nodo_arbol *nuevo = (nodo_arbol *)malloc(sizeof(nodo_arbol));
 
   // Asignamos los valores iniciales.
   nuevo->izq = NULL;
@@ -47,7 +47,7 @@ nodo_arbol *insertar_en_arbol(nodo_arbol *raiz, int dato)
   // En otro caso, insertamos en la posición correcta dentro del árbol.
   if (dato <= raiz->dato)
   {
-    // Si el dato nuevo es menor al dato en el nodo actual, lo colocamos en el 
+    // Si el dato nuevo es menor al dato en el nodo actual, lo colocamos en el
     // nodo izquierdo.
     raiz->izq = insertar_en_arbol(raiz->izq, dato);
   }
@@ -58,7 +58,7 @@ nodo_arbol *insertar_en_arbol(nodo_arbol *raiz, int dato)
     // nodo derecho.
     raiz->der = insertar_en_arbol(raiz->der, dato);
   }
-  
+
   // Regresamos el apuntador a la raiz.
   return raiz;
 }

@@ -12,10 +12,9 @@
 #define ARREGLO_H_INCLUIDO
 
 // Prototipos de funciones.
-void imprimir_arreglo(int*, int);
-int arreglos_iguales(int*, int*, int);
-void copiar_arreglo(int*,int*,int);
+void imprimir_arreglo(int *, int);
+int arreglos_iguales(int *, int *, int);
+void copiar_arreglo(int *, int *, int);
 int *crear_arreglo(int);
 
 #endif // ARREGLO_H_INCLUIDO
-

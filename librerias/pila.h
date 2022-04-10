@@ -20,7 +20,4 @@ typedef struct pila_t
   struct pila_t *siguiente;
 } pila;
 
-
-
 #endif // PILA_H_INCLUIDO
-

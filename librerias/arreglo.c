@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 /**
  * @brief Imprime un arreglo con el formato: [1,2,3]
  *
@@ -22,9 +21,9 @@
 void imprimir_arreglo(int *arreglo, int tamanio)
 {
   printf("[");
-  for(int i = 0; i < tamanio; i++)
+  for (int i = 0; i < tamanio; i++)
   {
-    printf("%i%c", arreglo[i], (i+1) < tamanio ? ',' : '\0');
+    printf("%i%c", arreglo[i], (i + 1) < tamanio ? ',' : '\0');
   }
   printf("]");
 }
@@ -37,7 +36,7 @@ void imprimir_arreglo(int *arreglo, int tamanio)
  * @param b El segundo arreglo.
  * @param tamanio El tamaño de los arreglos (deben ser iguales).
  */
-int arreglos_iguales(int *a, int*b, int tamanio)
+int arreglos_iguales(int *a, int *b, int tamanio)
 {
   // Iteramos sobre cada elemento.
   for (int i = 0; i < tamanio; i++)
@@ -76,6 +75,5 @@ void copiar_arreglo(int *origen, int *destino, int tamanio)
  */
 int *crear_arreglo(int tamanio)
 {
-  return (int*) malloc(sizeof(int) * tamanio);
+  return (int *)malloc(sizeof(int) * tamanio);
 }
-

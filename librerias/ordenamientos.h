@@ -12,7 +12,8 @@
 #define ORDENAMIENTOS_H_INCLUIDO
 
 // Enumeración con los nombres de los algoritmos disponibles
-typedef enum {
+typedef enum
+{
   BURBUJA_SIMPLE = 0, // Para asegurarnos que la enumeración inicie en 0.
   BURBUJA_OPTIMIZADA_1,
   BURBUJA_OPTIMIZADA_2,
@@ -25,19 +26,17 @@ typedef enum {
   HEAP
 } ALGORITMO_ORDENAMIENTO;
 
-
 // Prototipos de funciones de ordenamiento.
 void ordenar_burbuja_simple(int *, int);
-void ordenar_burbuja_optimizada_1(int*,int);
-void ordenar_burbuja_optimizada_2(int*,int);
-void ordenar_insercion(int*,int);
-void ordenar_seleccion(int*,int);
-void ordenar_heap(int*,int);
-void ordenar_merge(int*,int,int);
-void operacion_merge(int*,int,int,int);
-void ordenar_quick(int*,int);
-void ordenar_shell(int*,int);
-void ordenar_tree(int*,int);
+void ordenar_burbuja_optimizada_1(int *, int);
+void ordenar_burbuja_optimizada_2(int *, int);
+void ordenar_insercion(int *, int);
+void ordenar_seleccion(int *, int);
+void ordenar_heap(int *, int);
+void ordenar_merge(int *, int, int);
+void operacion_merge(int *, int, int, int);
+void ordenar_quick(int *, int);
+void ordenar_shell(int *, int);
+void ordenar_tree(int *, int);
 
 #endif // ORDENAMIENTOS_H_INCLUIDO
-

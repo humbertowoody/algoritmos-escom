@@ -1,7 +1,7 @@
 /**
  * @file matematicas.c
  * @author Humberto Alejandro Ortega Alcocer (humbertoalejandroortegalcocer@gmail.com)
- * @brief Implementación para librería con funciones genéricas de matemáticas. 
+ * @brief Implementación para librería con funciones genéricas de matemáticas.
  * @version 0.1
  * @date 2022-04-07
  *
@@ -15,7 +15,7 @@
  *
  * @param a El primer número.
  * @param b El segundo número.
- * @return int El menor de ambos números. 
+ * @return int El menor de ambos números.
  */
 int min(int a, int b)
 {
@@ -27,10 +27,9 @@ int min(int a, int b)
  *
  * @param a El primer número.
  * @param b El segundo número.
- * @return int El mayor de ambos números. 
+ * @return int El mayor de ambos números.
  */
 int max(int a, int b)
 {
   return a > b ? a : b;
 }
-

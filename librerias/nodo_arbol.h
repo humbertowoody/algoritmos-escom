@@ -16,7 +16,7 @@ typedef struct nodo_arbol_t
 {
   int dato;
   struct nodo_arbol_t *izq,
-                      *der;
+      *der;
 } nodo_arbol;
 
 // Prototipos de funciones para operaciones con árboles.
@@ -25,4 +25,3 @@ nodo_arbol *insertar_en_arbol(nodo_arbol *, int);
 void almacenar_recorrido_inorden(nodo_arbol *, int *, int *);
 
 #endif // NODO_ARBOL_H_INCLUIDO
-

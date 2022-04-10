@@ -15,12 +15,20 @@
 #include "nodo_arbol.h"
 
 // Enumeración con los nombres de los algoritmos disponibles.
-typedef enum {
+typedef enum
+{
   LINEAL = 0,
+  LINEAL_P,
   ABB,
+  ABB_P,
+  ABB_R,
   BINARIA,
+  BINARIA_P,
+  BINARIA_R,
   EXPONENCIAL,
-  FIBONACCI
+  EXPONENCIAL_P,
+  FIBONACCI,
+  FIBONACCI_P
 } ALGORITMO_BUSQUEDA;
 
 // Prototipos de funciones.
@@ -29,7 +37,6 @@ typedef enum {
 //   r = impelementación recursiva.
 int busqueda_lineal_i(int *, int, int);
 int busqueda_lineal_i_p(int *, int, int);
-int busqueda_lineal_r(int *, int, int);
 nodo_arbol *busqueda_abb_i(nodo_arbol *, int);
 nodo_arbol *busqueda_abb_i_p(nodo_arbol *, int);
 nodo_arbol *busqueda_abb_r(nodo_arbol *, int);
@@ -38,9 +45,7 @@ int busqueda_binaria_i_p(int *, int, int, int);
 int busqueda_binaria_r(int *, int, int, int);
 int busqueda_exponencial_i(int *, int, int);
 int busqueda_exponencial_i_p(int *, int, int);
-int busqueda_exponencial_r(int *, int, int);
 int busqueda_fibonacci_i(int *, int, int);
 int busqueda_fibonacci_i_p(int *, int, int);
-int busqueda_fibonacci_r(int *, int, int);
 
 #endif // BUSQUEDAS_H_INCLUIDO
