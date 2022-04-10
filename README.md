@@ -11,16 +11,19 @@ Alumno: Humberto Alejandro Ortega Alcocer.
 
 |ID|Título|Ejercicios|
 |---|---|---|
+|2|Complejidad de los Algoritmos|1, 2|
+|3|Análisis Temporal|3, 4|
+|4|Notación Asintótica|5, 6|
 
 
 ## Lista de Prácticas
 
 |ID|Título|Ubicación|
 |---|---|---|
-|1|_Pruebas a Posteriori_|[prácticas/práctica-1][practica-1]|
+|1|_Pruebas a Posteriori_ (Ordenamientos)|[prácticas/práctica-1][practica-1]|
+|2|_Pruebas a Posteriori_ (Búsquedas)|[prácticas/práctica-2][practica-2]|
 
 
 <!-- Referencias -->
 [practica-1]: prácticas/práctica-1/README.md
-
-
+[practica-2]: prácticas/práctica-2/README.md
