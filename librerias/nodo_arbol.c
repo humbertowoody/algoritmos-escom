@@ -104,3 +104,26 @@ void liberar_arbol(nodo_arbol *nodo)
     free(nodo);
   }
 }
+
+/**
+ * @brief Convierte un arreglo de enteros en un ABB.
+ *
+ * @param arreglo El arreglo de enteros a convertir.
+ * @param tam El tamaño del arreglo.
+ * @return nodo_arbol*
+ */
+nodo_arbol *arbol_de_arreglo(int *arreglo, int tam)
+{
+  // Variables locales.
+  nodo_arbol *raiz = NULL;
+
+  // Recorremos el arreglo.
+  for (int i = 0; i < tam; i++)
+  {
+    // Insertamos el dato en el árbol.
+    raiz = insertar_en_arbol(raiz, arreglo[i]);
+  }
+
+  // Regresamos la raíz del árbol.
+  return raiz;
+}

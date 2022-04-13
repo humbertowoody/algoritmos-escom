@@ -37,9 +37,9 @@ typedef enum
 //   r = implementación recursiva.
 int busqueda_lineal_i(int *, int, int);
 int busqueda_lineal_i_p(int *, int, int);
-nodo_arbol *busqueda_abb_i(nodo_arbol *, int);
-nodo_arbol *busqueda_abb_i_p(nodo_arbol *, int);
-nodo_arbol *busqueda_abb_r(nodo_arbol *, int);
+nodo_arbol *busqueda_abb_i(nodo_arbol *, nodo_arbol);
+nodo_arbol *busqueda_abb_i_p(nodo_arbol *, nodo_arbol);
+nodo_arbol *busqueda_abb_r(nodo_arbol *, nodo_arbol);
 int busqueda_binaria_i(int *, int, int, int);
 int busqueda_binaria_i_p(int *, int, int);
 int busqueda_binaria_r(int *, int, int, int);

@@ -32,12 +32,15 @@ typedef struct
   int elemento_buscado;
   int inicio;
   int fin;
+  nodo_arbol *nodo_raiz;
+  nodo_arbol nodo_buscado;
 } datos_hilo;
 
 // Estructura para almacenar los resultados de los hilos.
 typedef struct
 {
   int indice;
+  nodo_arbol *nodo_resultado;
 } resultado_hilo;
 
 // Prototipos de funciones.
@@ -45,6 +48,7 @@ void *busqueda_lineal_hilo(void *);
 void *busqueda_binaria_hilo(void *);
 void *busqueda_exponencial_hilo(void *);
 void *busqueda_fibonacci_hilo(void *);
+void *busqueda_abb_hilo(void *);
 
 /**
  * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
@@ -325,7 +329,7 @@ int busqueda_binaria_r(int *arreglo, int inicio, int fin, int elemento)
  * @return nodo_arbol Un nodo del árbol de búsqueda con el resultado, si no lo
  *                    encuentra regresará NULL.
  */
-nodo_arbol *busqueda_abb_i(nodo_arbol *raiz, int elemento)
+nodo_arbol *busqueda_abb_i(nodo_arbol *raiz, nodo_arbol elemento)
 {
   // Variables locales.
   nodo_arbol *nodo_actual = raiz;
@@ -334,12 +338,12 @@ nodo_arbol *busqueda_abb_i(nodo_arbol *raiz, int elemento)
   while (nodo_actual != NULL)
   {
     // Verificamos si el nodo actual contiene el elemento que buscamos.
-    if (nodo_actual->dato == elemento)
+    if (nodo_actual->dato == elemento.dato)
     {
       return nodo_actual;
     }
     // Si el elemento es mayor a nuestro nodo actual, iteramos por la derecha.
-    else if (nodo_actual->dato < elemento)
+    else if (nodo_actual->dato < elemento.dato)
     {
       nodo_actual = nodo_actual->der;
     }
@@ -355,6 +359,82 @@ nodo_arbol *busqueda_abb_i(nodo_arbol *raiz, int elemento)
 }
 
 /**
+ * @brief Busca un entero dentro de un arreglo de enteros y, en caso de que el
+ *        elemento sea encontrado, regresa el índice de su posición dentro del
+ *       arreglo. Implementación iterativa en paralelo.
+ *
+ *
+ * @param raiz La raíz del árbol de búsqueda.
+ * @param elemento El elemento que estamos buscando.
+ * @return int El índice del elemento encontrado, -1 si no se encontró.
+ */
+nodo_arbol *busqueda_abb_i_p(nodo_arbol *raiz, nodo_arbol elemento)
+{
+  // Variables locales.
+  pthread_t hilo1, hilo2;
+  resultado_hilo *resultado1 = NULL, *resultado2 = NULL;
+  datos_hilo datos1, datos2;
+
+  // Verificación inicial (si la raíz tiene el resultado).
+  if (raiz->dato == elemento.dato)
+  {
+    return raiz;
+  }
+
+  // Inicializamos los datos para nuestros hilos.
+  datos1.nodo_raiz = raiz->der;
+  datos2.nodo_raiz = raiz->izq;
+  datos1.nodo_buscado = datos2.nodo_buscado = elemento;
+
+  // Iniciamos los hilos.
+  pthread_create(&hilo1, NULL, busqueda_abb_hilo, (void *)&datos1);
+  pthread_create(&hilo2, NULL, busqueda_abb_hilo, (void *)&datos2);
+
+  // Esperamos a que los hilos terminen.
+  pthread_join(hilo1, (void *)&resultado1);
+  pthread_join(hilo2, (void *)&resultado2);
+
+  // Verificamos los resultados.
+  if (resultado1->nodo_resultado != NULL && resultado1->nodo_resultado->dato == elemento.dato)
+  {
+    // Encontramos el elemento en el primer hilo.
+    return resultado1->nodo_resultado;
+  }
+  else if (resultado2->nodo_resultado != NULL && resultado2->nodo_resultado->dato == elemento.dato)
+  {
+    // Encontramos el elemento en el segundo hilo.
+    return resultado2->nodo_resultado;
+  }
+  else
+  {
+    // No encontramos el elemento en ningún hilo.
+    return NULL;
+  }
+}
+
+/**
+ * @brief Función que se ejecuta en paralelo para buscar un elemento dentro de un
+ *       arreglo.
+ *
+ * @param datos Los datos para el hilo de ejecución del algoritmo de búsqueda abb iterativa.
+ * @return void* El índice resultante del algoritmo.
+ */
+void *busqueda_abb_hilo(void *datos)
+{
+  // Obtenemos los datos del hilo.
+  datos_hilo *d = (datos_hilo *)datos;
+
+  // Creamos la estructura para almacenar el resultado del hilo.
+  resultado_hilo *resultado = (resultado_hilo *)malloc(sizeof(resultado_hilo));
+
+  // Buscamos el elemento dentro del arreglo.
+  resultado->nodo_resultado = busqueda_abb_i(d->nodo_raiz, d->nodo_buscado);
+
+  // Regresamos el índice del elemento encontrado.
+  return (void *)resultado;
+}
+
+/**
  * @brief Busca un entero dentro de un Árbol Binario de Búsqueda previamente
  *        construído, en caso de encontrar el elemento, devuelve el nodo donde
  *        se encuentra, en caso contrario NULL. Implementación recursiva.
@@ -364,16 +444,16 @@ nodo_arbol *busqueda_abb_i(nodo_arbol *raiz, int elemento)
  * @return nodo_arbol Un nodo del árbol de búsqueda con el resultado, si no lo
  *                    encuentra regresará NULL.
  */
-nodo_arbol *busqueda_abb_r(nodo_arbol *raiz, int elemento)
+nodo_arbol *busqueda_abb_r(nodo_arbol *raiz, nodo_arbol elemento)
 {
   // Caso base.
-  if (raiz == NULL || raiz->dato == elemento)
+  if (raiz == NULL || raiz->dato == elemento.dato)
   {
     return raiz;
   }
 
   // Caso dónde el elemento es mayor a la raíz (nos vamos a la derecha del ABB).
-  if (raiz->dato < elemento)
+  if (raiz->dato < elemento.dato)
   {
     return busqueda_abb_r(raiz->der, elemento);
   }

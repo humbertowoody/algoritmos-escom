@@ -24,5 +24,6 @@ nodo_arbol *nuevo_nodo(int);
 nodo_arbol *insertar_en_arbol(nodo_arbol *, int);
 void almacenar_recorrido_inorden(nodo_arbol *, int *, int *);
 void liberar_arbol(nodo_arbol *);
+nodo_arbol *arbol_de_arreglo(int *, int);
 
 #endif // NODO_ARBOL_H_INCLUIDO

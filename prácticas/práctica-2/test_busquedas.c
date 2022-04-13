@@ -23,7 +23,7 @@
 int prueba_busqueda_lineal(int *, int, int);
 int prueba_busqueda_lineal_p(int *, int, int);
 int prueba_busqueda_abb(int *, int, int);
-// int prueba_busqueda_abb_p(int*, int, int);
+int prueba_busqueda_abb_p(int *, int, int);
 int prueba_busqueda_binaria(int *, int, int);
 int prueba_busqueda_binaria_p(int *, int, int);
 int prueba_busqueda_exponencial(int *, int, int);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
   printf("\t- Búsqueda Lineal: %s\n", prueba_busqueda_lineal(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda Lineal (paralelizada): %s\n", prueba_busqueda_lineal_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
   printf("\t- Búsqueda en ABB: %s\n", prueba_busqueda_abb(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
-  // printf("\t- Búsqueda en ABB (paralelizada): %s\n", prueba_busqueda_abb_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
+  printf("\t- Búsqueda en ABB (paralelizada): %s\n", prueba_busqueda_abb_p(desordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
 
   // Algoritmos que requieren que los elementos estén ordenados.
   printf("\t- Búsqueda Binaria: %s\n", prueba_busqueda_binaria(ordenados, NUM_ELEMENTOS, elemento_esperado) ? "✅" : "❌");
@@ -136,18 +136,42 @@ int prueba_busqueda_lineal_p(int *arreglo, int tamanio, int elemento)
 int prueba_busqueda_abb(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
-  nodo_arbol *raiz = NULL,
+  nodo_arbol *raiz = arbol_de_arreglo(arreglo, tamanio),
+             elemento_a_buscar = {.dato = elemento},
              *res;
   int resultado;
 
-  // Insertamos los elementos en nuestro ABB.
-  for (int i = 0; i < tamanio; i++)
-  {
-    raiz = insertar_en_arbol(raiz, arreglo[i]);
-  }
+  // Ejecutamos el algoritmo.
+  res = busqueda_abb_i(raiz, elemento_a_buscar);
+
+  // Calculamos resultado.
+  resultado = res != NULL && res->dato == elemento;
+
+  // Liberamos la memoria de nuestros nodos.
+  liberar_arbol(raiz);
+
+  // Comparamos nuestro resultado obtenido.
+  return resultado;
+}
+
+/**
+ * @brief Realiza la prueba del algoritmo de búsqueda en un ABB en paralelo.
+ *
+ * @param arreglo El arreglo con números desordenados para realizar la búsqueda.
+ * @param tamanio El tamaño del arreglo para realizar la búsqueda.
+ * @param elemento El elemento a buscar.
+ * @return int 1 si funciona, 0 si no funciona.
+ */
+int prueba_busqueda_abb_p(int *arreglo, int tamanio, int elemento)
+{
+  // Variables locales.
+  nodo_arbol *raiz = arbol_de_arreglo(arreglo, tamanio),
+             elemento_a_buscar = {.dato = elemento},
+             *res;
+  int resultado;
 
   // Ejecutamos el algoritmo.
-  res = busqueda_abb_i(raiz, elemento);
+  res = busqueda_abb_i_p(raiz, elemento_a_buscar);
 
   // Calculamos resultado.
   resultado = res != NULL && res->dato == elemento;
