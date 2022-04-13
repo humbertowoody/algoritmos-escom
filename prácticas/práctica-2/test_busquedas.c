@@ -19,6 +19,9 @@
 // Constante con el número de elementos default para las pruebas.
 #define NUM_ELEMENTOS_DEFAULT 30000
 
+// Constante con el número máximo de hilos a utilizar.
+#define NUMERO_MAXIMO_HILOS 5
+
 // Prototipos de funciones.
 int prueba_busqueda_lineal(int *, int, int);
 int prueba_busqueda_lineal_p(int *, int, int);

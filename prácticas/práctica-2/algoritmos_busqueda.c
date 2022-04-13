@@ -17,6 +17,9 @@
 #include <stdio.h>
 #include <string.h>
 
+// Constante con el número máximo de hilos a utilizar.
+#define NUMERO_MAXIMO_HILOS 5
+
 // Arreglo constante con los nombres de los algoritmos.
 const char *const ALGORITMO_STR[] =
     {
@@ -45,7 +48,8 @@ int main(int argc, char *argv[])
       *elementos,               // El arreglo con los elementos leídos.
       elemento_busqueda;        // El elemento a buscar en el arreglo.
   ALGORITMO_BUSQUEDA algoritmo; // El algoritmo a utilizar.
-  nodo_arbol *raiz = NULL;      // En caso de que se use ABB.
+  nodo_arbol *raiz = NULL,      // En caso de que se use ABB.
+      nodo_busqueda;            // En caso de que se use ABB.
 
   // Validamos el número de argumentos proporcionados al programa.
   if (argc != 4)
@@ -85,11 +89,8 @@ int main(int argc, char *argv[])
   // Si el algoritmo que vamos a usar es ABB, armamos el ABB en cuestión.
   if (algoritmo == ABB || algoritmo == ABB_P)
   {
-    // Insertamos cada elemento del arreglo en el ABB.
-    for (int i = 0; i < numero_elementos; i++)
-    {
-      raiz = insertar_en_arbol(raiz, elementos[i]);
-    }
+    raiz = arbol_de_arreglo(elementos, numero_elementos);
+    nodo_busqueda.dato = elemento_busqueda;
   }
 
   // Tomamos la medida del tiempo inicial.
@@ -107,11 +108,11 @@ int main(int argc, char *argv[])
     break;
 
   case ABB:
-    busqueda_abb_i(raiz, elemento_busqueda);
+    busqueda_abb_i(raiz, nodo_busqueda);
     break;
 
   case ABB_P:
-    // busqueda_abb_i_p(raiz, elemento_busqueda);
+    busqueda_abb_i_p(raiz, nodo_busqueda);
     break;
 
   case BINARIA:
@@ -165,6 +166,7 @@ int main(int argc, char *argv[])
  */
 void mostrar_uso(char *nombre_ejecutable)
 {
+  printf("Algoritmos de Búsqueda.\n");
   printf("Uso: %s <nombre de algoritmo> <cantidad de números> <número a buscar>\n", nombre_ejecutable);
   printf("\n");
   printf("Algoritmos disponibles:\n");
