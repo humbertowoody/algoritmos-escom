@@ -90,7 +90,8 @@ int busqueda_lineal_i_p(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
   pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
-  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS, // Tamaño de los subarreglos.
+      resultado_final = -1;                                 // Resultado final.
   resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
   datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
 
@@ -122,7 +123,7 @@ int busqueda_lineal_i_p(int *arreglo, int tamanio, int elemento)
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
-      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+      resultado_final = resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
 
     // Limpiamos la memoria de los resultados de los hilos.
@@ -130,7 +131,7 @@ int busqueda_lineal_i_p(int *arreglo, int tamanio, int elemento)
   }
 
   // El elemento no se encuentra dentro del arreglo.
-  return -1;
+  return resultado_final;
 }
 
 /**
@@ -214,7 +215,8 @@ int busqueda_binaria_i_p(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
   pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
-  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS, // Tamaño de los subarreglos.
+      resultado_final = -1;                                 // Resultado final.
   resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
   datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
 
@@ -247,7 +249,7 @@ int busqueda_binaria_i_p(int *arreglo, int tamanio, int elemento)
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
-      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+      resultado_final = resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
 
     // Limpiamos la memoria de los resultados de los hilos.
@@ -255,7 +257,7 @@ int busqueda_binaria_i_p(int *arreglo, int tamanio, int elemento)
   }
 
   // El elemento no se encuentra dentro del arreglo.
-  return -1;
+  return resultado_final;
 }
 
 /**
@@ -374,6 +376,7 @@ nodo_arbol *busqueda_abb_i_p(nodo_arbol *raiz, nodo_arbol elemento)
   pthread_t hilo1, hilo2;
   resultado_hilo *resultado1 = NULL, *resultado2 = NULL;
   datos_hilo datos1, datos2;
+  nodo_arbol *resultado_final = NULL;
 
   // Verificación inicial (si la raíz tiene el resultado).
   if (raiz->dato == elemento.dato)
@@ -398,18 +401,20 @@ nodo_arbol *busqueda_abb_i_p(nodo_arbol *raiz, nodo_arbol elemento)
   if (resultado1->nodo_resultado != NULL && resultado1->nodo_resultado->dato == elemento.dato)
   {
     // Encontramos el elemento en el primer hilo.
-    return resultado1->nodo_resultado;
+    resultado_final = resultado1->nodo_resultado;
   }
   else if (resultado2->nodo_resultado != NULL && resultado2->nodo_resultado->dato == elemento.dato)
   {
     // Encontramos el elemento en el segundo hilo.
-    return resultado2->nodo_resultado;
+    resultado_final = resultado2->nodo_resultado;
   }
-  else
-  {
-    // No encontramos el elemento en ningún hilo.
-    return NULL;
-  }
+
+  // Liberamos los resultados.
+  free(resultado1);
+  free(resultado2);
+
+  // Regresamos el resultado final.
+  return resultado_final;
 }
 
 /**
@@ -508,9 +513,10 @@ int busqueda_exponencial_i_p(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
   pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
-  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
-  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
-  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS, // Tamaño de los subarreglos.
+      resultado_final = -1;
+  resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS]; // Arreglo de resultados de los hilos.
+  datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];  // Datos para los hilos.
 
   // Iniciamos el arreglo de hilos.
   for (int i = 0; i < NUMERO_MAXIMO_HILOS; i++)
@@ -540,15 +546,15 @@ int busqueda_exponencial_i_p(int *arreglo, int tamanio, int elemento)
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
-      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+      resultado_final = resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
 
     // Limpiamos la memoria de los resultados de los hilos.
     free(resultados_hilos[i]);
   }
 
-  // El elemento no se encuentra dentro del arreglo.
-  return -1;
+  // Regresamos el resultado final.
+  return resultado_final;
 }
 
 /**
@@ -658,7 +664,8 @@ int busqueda_fibonacci_i_p(int *arreglo, int tamanio, int elemento)
 {
   // Variables locales.
   pthread_t hilos[NUMERO_MAXIMO_HILOS];                     // Arreglo de hilos.
-  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS; // Tamaño de los subarreglos.
+  int tamanio_sub_arreglos = tamanio / NUMERO_MAXIMO_HILOS, // Tamaño de los subarreglos.
+      resultado_final = -1;                                 // Resultado final.
   resultado_hilo *resultados_hilos[NUMERO_MAXIMO_HILOS];    // Arreglo de resultados de los hilos.
   datos_hilo datos_para_los_hilos[NUMERO_MAXIMO_HILOS];     // Datos para los hilos.
 
@@ -690,7 +697,7 @@ int busqueda_fibonacci_i_p(int *arreglo, int tamanio, int elemento)
     if (resultados_hilos[i]->indice != -1)
     {
       // Ajustamos el índice del elemento encontrado.
-      return resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
+      resultado_final = resultados_hilos[i]->indice + i * tamanio_sub_arreglos;
     }
 
     // Limpiamos la memoria de los resultados de los hilos.
@@ -698,7 +705,7 @@ int busqueda_fibonacci_i_p(int *arreglo, int tamanio, int elemento)
   }
 
   // El elemento no se encuentra dentro del arreglo.
-  return -1;
+  return resultado_final;
 }
 
 /**
