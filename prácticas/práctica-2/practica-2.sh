@@ -14,7 +14,7 @@ ARCHIVO_10_MILLONES_DE_NUMEROS=10_millones_numeros.txt
 
 # Bandera para indicar si queremos una ejecución en paralelo (resultados no
 # válidos pero excelente para hacer pruebas).
-EJECUCION_EN_PARALELO=true
+EJECUCION_EN_PARALELO=false
 
 # Nombre del programa para hacer "timeout", es decir, que cuide que si nuestro
 # binario toma más de X tiempo, lo finaliza.
@@ -27,34 +27,34 @@ EJECUCION_EN_PARALELO=true
 PROGRAMA_TIMEOUT=timeout
 
 # Máximo tiempo de ejecución por programa.
-TIEMPO_TIMEOUT=10s
+TIEMPO_TIMEOUT=1h
 
 # Índices de los algoritmos disponibles en el programa.
 ALGORITMOS=(
   "lineal"
   "lineal_p"
   "abb"
-  #"abb_p"
+  "abb_p"
   "binaria"
-  #"binaria_p"
+  "binaria_p"
   "exponencial"
-  #"exponencial_p"
+  "exponencial_p"
   "fibonacci"
-  #"fibonacci_p"
+  "fibonacci_p"
 );
 
 # Arreglo con los valores de n para probar.
 VALORES_N=(
   1000000
-  # 2000000
-  # 3000000
-  # 4000000
-  # 5000000
-  # 6000000
-  # 7000000
-  # 8000000
-  # 9000000
-  # 10000000
+  2000000
+  3000000
+  4000000
+  5000000
+  6000000
+  7000000
+  8000000
+  9000000
+  10000000
 );
 
 # Arreglo con los elementos a buscar.
@@ -98,6 +98,9 @@ declare -A timeouts;
 for alg in ${ALGORITMOS[@]}; do
   timeouts[$alg]=false;
 done
+
+# Nos aseguramos que se contruya el programa antes de empezar.
+make clean;
 
 # Compilamos el programa.
 make all;
