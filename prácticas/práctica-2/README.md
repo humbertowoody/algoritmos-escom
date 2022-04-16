@@ -1,4 +1,4 @@
-# Práctica 1
+# Práctica 2
 
 En esta práctica se realizó la implementación de varios algoritmos de búsqueda
 presentes en `librerias/busquedas.h` de los cuales se obtuvieron métricas
