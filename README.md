@@ -25,5 +25,5 @@ Alumno: Humberto Alejandro Ortega Alcocer.
 
 
 <!-- Referencias -->
-[practica-1]: prácticas/práctica-1/README.md
-[practica-2]: prácticas/práctica-2/README.md
+[practica-1]: /prácticas/práctica-1/README.md
+[practica-2]: /prácticas/práctica-2/README.md
