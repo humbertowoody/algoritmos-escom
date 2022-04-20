@@ -33,6 +33,7 @@ void ordenar_burbuja_optimizada_2(int *, int);
 void ordenar_insercion(int *, int);
 void ordenar_seleccion(int *, int);
 void ordenar_heap(int *, int);
+void operacion_heapify(int *, int, int);
 void ordenar_merge(int *, int, int);
 void operacion_merge(int *, int, int, int);
 void ordenar_quick(int *, int);

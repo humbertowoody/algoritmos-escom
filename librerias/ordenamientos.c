@@ -401,6 +401,47 @@ void ordenar_quick(int *arreglo, int tamano_arreglo)
 }
 
 /**
+ * @brief Operación de Heapify para el algoritmo: "HeapSort".
+ *       El heap debe estar construido desde la raíz.
+ *
+ * @param arreglo El arreglo de dónde generar la pila.
+ * @param tamanio El tamaño del arreglo.
+ * @param raiz La ubicación de la raíz actual.
+ */
+void operacion_heapify(int *arreglo, int tamanio, int raiz)
+{
+  // Variables locales.
+  int izq = 2 * raiz + 1,
+      der = 2 * raiz + 2,
+      max = raiz;
+
+  // Si el hijo izquierdo es mayor que el padre, se intercambian los valores.
+  if (izq < tamanio && arreglo[izq] > arreglo[max])
+  {
+    max = izq;
+  }
+
+  // Si el hijo derecho es mayor que el padre, se intercambian los valores.
+  if (der < tamanio && arreglo[der] > arreglo[max])
+  {
+    max = der;
+  }
+
+  // Si el valor máximo no es el padre, se intercambian los valores.
+  if (max != raiz)
+  {
+    int aux = arreglo[raiz];
+    arreglo[raiz] = arreglo[max];
+    arreglo[max] = aux;
+
+    // Se llama recursivamente para que la raíz sea el máximo.
+    operacion_heapify(arreglo, tamanio, max);
+  }
+
+  // La raíz ya es el máximo, así que no se hace nada.
+}
+
+/**
  * @brief Ordena un arreglo de números enteros de forma ascendente usando
  *        el algoritmo: "HeapSort".
  *
@@ -410,70 +451,23 @@ void ordenar_quick(int *arreglo, int tamano_arreglo)
 void ordenar_heap(int *arreglo, int tamano_arreglo)
 {
   // Variables auxiliares.
-  int aux;
-  int pos_actual;
-  int pos_padre;
+  int aux, i;
 
   // 1) Convertir nuestro arreglo en el orden de una pila.
-  for (int i = tamano_arreglo / 2 - 1; i >= 0; i--)
+  for (i = tamano_arreglo / 2 - 1; i >= 0; i--)
   {
-    // Recorrido del arreglo.
-    pos_actual = i;
-
-    // Recorrido del arreglo.
-    while (pos_actual < tamano_arreglo / 2)
-    {
-      // Se asigna el valor del elemento actual como el mínimo.
-      pos_padre = (pos_actual - 1) / 2;
-
-      // Si el elemento actual es menor que el mínimo, se intercambian los valores.
-      if (arreglo[pos_actual] < arreglo[pos_padre])
-      {
-        aux = arreglo[pos_actual];
-        arreglo[pos_actual] = arreglo[pos_padre];
-        arreglo[pos_padre] = aux;
-
-        // Se asigna el valor del elemento actual como el mínimo.
-        pos_actual = pos_padre;
-      }
-      else
-      {
-        break;
-      }
-    }
+    operacion_heapify(arreglo, tamano_arreglo, i);
   }
 
-  // 2) Extraemos los datos representados en la pila.
-  for (int i = tamano_arreglo - 1; i >= 0; i--)
+  // 2) Realizamos el ordenamiento.
+  for (i = tamano_arreglo - 1; i >= 0; i--)
   {
-    // Se asigna el valor del elemento actual como el mínimo.
+    // Intercambiamos las posiciones dentro del arreglo.
     aux = arreglo[0];
     arreglo[0] = arreglo[i];
     arreglo[i] = aux;
 
-    // Recorrido del arreglo.
-    pos_actual = 0;
-
-    // Recorrido del arreglo.
-    while (pos_actual < tamano_arreglo / 2)
-    {
-      // Se asigna el valor del elemento actual como el m minimo.
-      pos_padre = (pos_actual - 1) / 2;
-
-      // Si el elemento actual es menor que el mínimo, se intercambian los valores.
-      if (arreglo[pos_actual] < arreglo[pos_padre])
-      {
-        aux = arreglo[pos_actual];
-        arreglo[pos_actual] = arreglo[pos_padre];
-        arreglo[pos_padre] = aux;
-
-        // Se asigna el valor del elemento actual como el mínimo.
-        pos_actual = pos_padre;
-      }
-      else
-      {
-        break;
-      }
-    }
+    // Se realiza el heapify.
+    operacion_heapify(arreglo, i, 0);
   }
 }
