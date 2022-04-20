@@ -10,6 +10,7 @@
  */
 #include "ordenamientos.h"
 #include "nodo_arbol.h"
+#include "arreglo.h"
 #include <stdlib.h>
 
 /**
@@ -252,26 +253,23 @@ void ordenar_tree(int *arreglo, int tamano_arreglo)
  *        el algoritmo: "Merge".
  *
  * @param arreglo Arreglo a ordenar.
- * @param inicio El punto de inicio para el ordenamiento.
- * @param tamano_arreglo Tamaño del arreglo.
+ * @param izq El índice izquierdo para la operación.
+ * @param der El índice derecho para la operación.
  */
-void ordenar_merge(int *arreglo, int inicio, int tamano_arreglo)
+void ordenar_merge(int *arreglo, int izq, int der)
 {
-  // Variables auxiliares.
-  int punto_medio;
-
   // Validamos el caso base de la recursividad.
-  if (inicio < tamano_arreglo)
+  if (izq < der)
   {
     // Calculamos nuestro punto medio.
-    punto_medio = (int)((inicio + tamano_arreglo) / 2);
+    int punto_medio = izq + (der - izq) / 2;
 
     // Llamamos recursivo para cada mitad.
-    ordenar_merge(arreglo, inicio, punto_medio);
-    ordenar_merge(arreglo, punto_medio + 1, tamano_arreglo);
+    ordenar_merge(arreglo, izq, punto_medio);
+    ordenar_merge(arreglo, punto_medio + 1, der);
 
     // Realizamos la mezcla de los dos arreglos ordenados.
-    operacion_merge(arreglo, inicio, punto_medio, tamano_arreglo);
+    operacion_merge(arreglo, izq, punto_medio, der);
   }
 }
 
@@ -280,58 +278,65 @@ void ordenar_merge(int *arreglo, int inicio, int tamano_arreglo)
  *        previamente ordenados.
  *
  * @param arreglo El arreglo de resultados.
- * @param inicio El inicio del arreglo a tratar.
- * @param punto_medio El punto medio del arreglo a tratar.
- * @param tamano_arreglo El tamaño del arreglo
+ * @param izq El índice izquierdo para la operación.
+ * @param punto_medio El índice del punto medio para la operación.
+ * @param der El índice derecho para la operación.
  */
-void operacion_merge(int *arreglo, int inicio, int punto_medio, int tamano_arreglo)
+void operacion_merge(int *arreglo, int izq, int punto_medio, int der)
 {
   // Variables auxiliares
-  int l = tamano_arreglo - inicio + 1,
-      i = inicio,
-      j = punto_medio + 1,
-      *arreglo_temp;
+  int i, j, k,
+      n1 = punto_medio - izq + 1,
+      n2 = der - punto_medio,
+      *arr_izq = crear_arreglo(n1),
+      *arr_der = crear_arreglo(n2);
 
-  // Inicializamos el arreglo temporal.
-  arreglo_temp = (int *)malloc(sizeof(int) * l);
-
-  // Iteramos para crear el nuevo arreglo (ordenado).
-  for (int k = 0; k < l; k++)
+  // Copiamos la información a los arreglos temporales.
+  // Mitad izquierda.
+  for (i = 0; i < n1; i++)
   {
-    // Lógica para ordenar el elemento en cuestión.
-    if (i <= punto_medio && j <= tamano_arreglo)
+    arr_izq[i] = arreglo[izq + i];
+  }
+  // Mitad derecha.
+  for (j = 0; j < n2; j++)
+  {
+    arr_der[j] = arreglo[punto_medio + 1 + j];
+  }
+
+  // Unimos los dos arreglos de vuelta en el arreglo original.
+  for (i = j = 0, k = izq; i < n1 && j < n2; k++)
+  {
+    // Si el valor en el arreglo izquierdo es menor, lo asignamos
+    // al arreglo y aumentamos el contador.
+    if (arr_izq[i] <= arr_der[j])
     {
-      if (arreglo[i] < arreglo[j])
-      {
-        arreglo_temp[k] = arreglo[i];
-        i++;
-      }
-      else
-      {
-        arreglo_temp[k] = arreglo[j];
-        j++;
-      }
-    }
-    else if (i <= punto_medio)
-    {
-      arreglo_temp[k] = arreglo[i];
+      arreglo[k] = arr_izq[i];
       i++;
     }
+    // Si el valor en el arreglo izquierdo es mayor, asignamos el
+    // valor derecho y aumentamos el contador.
     else
     {
-      arreglo_temp[k] = arreglo[j];
+      arreglo[k] = arr_der[j];
       j++;
     }
   }
 
-  // Copiamos los valores en el arreglo temporal para la sección determinada.
-  for (int r = inicio, p = 0; r < tamano_arreglo && p < l; r++, p++)
+  // Copiamos los elementos restantes del arreglo izquierdo.
+  for (; i < n1; i++, k++)
   {
-    arreglo[r] = arreglo_temp[p];
+    arreglo[k] = arr_izq[i];
   }
 
-  // Limpiamos la memoria usada por arreglo_temp
-  free(arreglo_temp);
+  // Copiamos los elementos restantes del arreglo derecho.
+  for (; j < n2; j++, k++)
+  {
+    arreglo[k] = arr_der[j];
+  }
+
+  // Liberamos la memoria de los arreglos temporales.
+  free(arr_izq);
+  free(arr_der);
 }
 
 /**

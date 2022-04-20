@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
     case MERGE:
       printf("Merge: ");
-      ordenar_merge(ordenados, 0, NUM_ELEMENTOS);
+      ordenar_merge(ordenados, 0, NUM_ELEMENTOS - 1);
       break;
 
     case HEAP:

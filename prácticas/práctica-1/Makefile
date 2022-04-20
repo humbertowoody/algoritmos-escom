@@ -16,7 +16,7 @@ NUM_PRUEBA_DEFAULT=100
 
 # Binarios para cada código de la práctica.
 ALGORITMOS_ORDENAMIENTO=algoritmos_ordenamiento.out
-ALGORITMOS_ORDENAMIENTO_OBJS=algoritmos_ordenamiento.o librerias/tiempo.o librerias/ordenamientos.o librerias/nodo_arbol.o
+ALGORITMOS_ORDENAMIENTO_OBJS=algoritmos_ordenamiento.o librerias/tiempo.o librerias/ordenamientos.o librerias/nodo_arbol.o librerias/arreglo.o
 TEST_ORDENAMIENTOS=test_ordenamientos.out
 TEST_ORDENAMIENTOS_OBJS=test_ordenamientos.o librerias/tiempo.o librerias/ordenamientos.o librerias/nodo_arbol.o librerias/genera_casos.o librerias/arreglo.o
 
