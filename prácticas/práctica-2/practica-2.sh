@@ -99,7 +99,9 @@ for alg in ${ALGORITMOS[@]}; do
   timeouts[$alg]=false;
 done
 
-# Nos aseguramos que se contruya el programa antes de empezar.
+# Nos aseguramos que todos los binarios compilados sean la última versión
+# (en Make, si un binario o archivo objeto existe, entonces se omite su
+# respectiva operación).
 make clean;
 
 # Compilamos el programa.
