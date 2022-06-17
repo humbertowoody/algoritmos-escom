@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Strassen</title>
+    <link rel="stylesheet" href="/assets/css/estilos-animacion.css" />
+  </head>
+
+  <body>
+    <h2 class="titulo">Animación <em>Strassen</em></h2>
+    <!-- <p>
+      En esta sección puedes realizar una prueba funcional de la operación del
+      algoritmo de multiplicación de matrices de Strassen a fin de visualizar
+      los pasos de ejecución.
+    </p> -->
+
+    <table class="matrizA" id="matrizA">
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a11" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a12" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a13" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a14" class="input" type="number" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a21" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a22" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a23" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a24" class="input" type="number" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a31" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a32" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a33" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a34" class="input" type="number" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a41" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a42" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a43" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="a44" class="input" type="number" />
+        </td>
+      </tr>
+    </table>
+
+    <table class="subMatrizA" id="subMatrizA" style="display: none">
+      <tr>
+        <td id="subA11" style="padding: 15px 15px 15px 15px"></td>
+        <td id="subA12" style="padding: 15px 15px 15px 15px"></td>
+      </tr>
+      <tr>
+        <td id="subA21" style="padding: 15px 15px 15px 15px"></td>
+        <td id="subA22" style="padding: 15px 15px 15px 15px"></td>
+      </tr>
+    </table>
+
+    <table class="matrizB" id="matrizB">
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b11" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b12" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b13" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b14" class="input" type="number" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b21" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b22" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b23" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b24" class="input" type="number" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b31" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b32" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b33" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b34" class="input" type="number" />
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b41" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b42" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b43" class="input" type="number" />
+        </td>
+        <td style="padding: 15px 15px 15px 15px">
+          <input id="b44" class="input" type="number" />
+        </td>
+      </tr>
+    </table>
+
+    <table class="subMatrizB" id="subMatrizB" style="display: none">
+      <tr>
+        <td id="subB11" style="padding: 15px 15px 15px 15px"></td>
+        <td id="subB12" style="padding: 15px 15px 15px 15px"></td>
+      </tr>
+      <tr>
+        <td id="subB21" style="padding: 15px 15px 15px 15px"></td>
+        <td id="subB22" style="padding: 15px 15px 15px 15px"></td>
+      </tr>
+    </table>
+
+    <table class="subResultado" id="subResultado" style="display: none">
+      <tr>
+        <th style="padding: 15px 15px 15px 15px">p1 + p2 - p3 + p4</th>
+        <th style="padding: 15px 15px 15px 15px">p5 + p3</th>
+      </tr>
+      <tr>
+        <th style="padding: 15px 15px 15px 15px">p6 + p2</th>
+        <th style="padding: 15px 15px 15px 15px">p5 + p1 - p6 - p7</th>
+      </tr>
+    </table>
+
+    <table class="Resultado" id="Resultado" style="display: none">
+      <tr>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+      </tr>
+      <tr>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+      </tr>
+      <tr>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+      </tr>
+      <tr>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+        <th style="padding: 15px 15px 15px 15px"></th>
+      </tr>
+    </table>
+
+    <div class="a" id="a" style="display: none">a</div>
+    <div class="b" id="b" style="display: none">b</div>
+    <div class="c" id="c" style="display: none">c</div>
+    <div class="d" id="d" style="display: none">d</div>
+
+    <div class="aa" id="aa" style="display: none">a</div>
+    <div class="bb" id="bb" style="display: none">b</div>
+    <div class="cc" id="cc" style="display: none">c</div>
+    <div class="dd" id="dd" style="display: none">d</div>
+
+    <div class="e" id="e" style="display: none">e</div>
+    <div class="f" id="f" style="display: none">f</div>
+    <div class="g" id="g" style="display: none">g</div>
+    <div class="h" id="h" style="display: none">h</div>
+
+    <div class="ee" id="ee" style="display: none">e</div>
+    <div class="ff" id="ff" style="display: none">f</div>
+    <div class="gg" id="gg" style="display: none">g</div>
+    <div class="hh" id="hh" style="display: none">h</div>
+
+    <div class="squareAG" id="cuadroFrontA" style="display: none"></div>
+    <div class="squareBG" id="cuadroFrontB" style="display: none"></div>
+
+    <div class="squareCh1" id="cuadroCh1" style="display: none"></div>
+    <div class="squareCh2" id="cuadroCh2" style="display: none"></div>
+    <div class="squareCh3" id="cuadroCh3" style="display: none"></div>
+    <div class="squareCh4" id="cuadroCh4" style="display: none"></div>
+
+    <div class="squareChb1" id="cuadroChb1" style="display: none"></div>
+    <div class="squareChb2" id="cuadroChb2" style="display: none"></div>
+    <div class="squareChb3" id="cuadroChb3" style="display: none"></div>
+    <div class="squareChb4" id="cuadroChb4" style="display: none"></div>
+
+    <div class="squareChsub1" id="squareChsub1" style="display: none"></div>
+    <div class="squareChsub2" id="squareChsub2" style="display: none"></div>
+
+    <div class="squareAsubCh1" id="squareAsubCh1" style="display: none"></div>
+    <div class="squareAsubCh2" id="squareAsubCh2" style="display: none"></div>
+    <div class="squareAsubCh3" id="squareAsubCh3" style="display: none"></div>
+    <div class="squareAsubCh4" id="squareAsubCh4" style="display: none"></div>
+
+    <div class="squareBsubCh1" id="squareBsubCh1" style="display: none"></div>
+    <div class="squareBsubCh2" id="squareBsubCh2" style="display: none"></div>
+    <div class="squareBsubCh3" id="squareBsubCh3" style="display: none"></div>
+    <div class="squareBsubCh4" id="squareBsubCh4" style="display: none"></div>
+
+    <div class="squareChR1" id="squareChR1" style="display: none"></div>
+    <div class="squareChR2" id="squareChR2" style="display: none"></div>
+    <div class="squareChR3" id="squareChR3" style="display: none"></div>
+    <div class="squareChR4" id="squareChR4" style="display: none"></div>
+
+    <div class="squareChR1f" id="squareChR1f" style="display: none"></div>
+    <div class="squareChR2f" id="squareChR2f" style="display: none"></div>
+    <div class="squareChR3f" id="squareChR3f" style="display: none"></div>
+    <div class="squareChR4f" id="squareChR4f" style="display: none"></div>
+
+    <div class="margenMatriz" id="margenMatriz"></div>
+
+    <div class="codigo" id="codigo" style="display: none">
+      <h4>fn strassen(a,b){</h4>
+      <h6>a, b, c, d = separar(A)</h6>
+      <h6>e, f, g, h = separar(B)</h6>
+      <h6>ae = strassen(a,e)</h6>
+      <h6>bg = strassen(b,g)</h6>
+      <h6>af = strassen(a,f)</h6>
+      <h6>bh = strassen(b,h)</h6>
+      <h6>ce = strassen(c,e)</h6>
+      <h6>dg = strassen(d,g)</h6>
+      <h6>cf = strassen(c,f)</h6>
+      <h6>dh = strassen(d,h)</h6>
+      <h6>c11 = p1 + p2 - p3 + p4</h6>
+      <h6>c12 = p5 + p3</h6>
+      <h6>c21 = p6 + p2</h6>
+      <h6>c22 = p5 + p1 - p6 - p7</h6>
+      <h6>c = np.vstack((np.hstack((c11,c12)), np.hstack((c21,c22))))}</h6>
+    </div>
+
+    <div class="codigo2" id="codigo2" style="display: none">
+      <h4>Funcion separar(matriz){</h4>
+      <h6>Return matriz[n/2, n/2],</h6>
+      <h6>matriz[n/2, n/2],</h6>
+      <h6>matriz[n/2, n/2],</h6>
+      <h6>matriz[n/2, n/2],</h6>
+      <h4>}</h4>
+    </div>
+
+    <div class="cuadroCodigo" id="cuadroCodigo1" style="display: none"></div>
+    <div class="cuadroCodigo2" id="cuadroCodigo2" style="display: none"></div>
+    <div
+      class="cuadroCodigoFinal"
+      id="cuadroCodigoFinal"
+      style="display: none"
+    ></div>
+
+    <p class="status" id="status">
+      Rellena las matrices o usa el botón para rellenarlas automáticamente.
+    </p>
+
+    <button class="boton" id="siguiente">Iniciar</button>
+
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/animacion-strassen.js"></script>
+  </body>
+</html>

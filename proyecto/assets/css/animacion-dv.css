@@ -1,0 +1,116 @@
+/* Tipografía Quicksand */
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+
+/* Paleta de colores */
+:root {
+  --stratos: #001B48;
+  --RBlue: #02457A;
+  --BBlue: #018ABE;
+  --Mglory: #97CADB;
+  --Botticelli: #D6EBEE;
+  --ancho-celdas: 25px;
+  --alto-celdas: 25px;
+  --ancho-bordes: 1px;
+}
+
+
+
+/** Para eliminar los selectores en los inputs **/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+html,
+body {
+  font-family: 'Quicksand', sans-serif;
+  color: var(--stratos);
+  background: var(--Mglory);
+  display: flex;
+  flex-direction: column;
+  transition-duration: 5s;
+}
+
+.borde-azul {
+  border: var(--ancho-bordes) solid var(--BBlue);
+}
+
+.borde-rojo {
+  border: var(--ancho-bordes) solid red;
+}
+
+.borde-verde {
+  border: var(--ancho-bordes) solid green;
+}
+
+.borde-negro {
+  border: var(--ancho-bordes) solid black;
+}
+
+.matrices {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+pre,
+code {
+  padding: 15px;
+
+  border-radius: 10px;
+  border: 1px solid white;
+  background: var(--stratos);
+  color: white;
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: var(--stratos);
+  color: var(--Botticelli);
+  padding: 10px;
+  font-family: 'Quicksand', sans-serif;
+}
+
+button:hover {
+  background: var(--RBlue);
+  transition: 0.2s;
+  border-color: var(--Botticelli);
+}
+
+/* Bordes en las tablas */
+table,
+th,
+tr,
+td {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1.04em;
+  font-family: 'Quicksand', sans-serif;
+  padding: 0px;
+  border: 0px;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+}
+
+
+.matriz-resultante .submatriz td {
+  padding: 10px;
+}
+
+input {
+  font-family: 'Quicksand', sans-serif;
+  border: none;
+  background: none;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.04em;
+}
+
