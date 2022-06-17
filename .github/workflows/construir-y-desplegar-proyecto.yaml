@@ -1,0 +1,41 @@
+name: Construir y Desplegar un sitio en GitHub Pages
+
+# Cada que realicemos un push a master...
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # Construir el sitio y desplegarlo en github pages.
+  construir-y-desplegar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: NodeJS v16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+
+      - name: Instalar dependencias
+        working-directory: proyecto/
+        run: |
+          npm ci
+
+      - name: Construir el sitio web con Gulp
+        working-directory: proyecto/
+        run: |
+          npm run build
+
+      - name: Desplegar el sitio web en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./proyecto/build
+          cname: strassen.humbertowoody.xyz
