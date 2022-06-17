@@ -1,0 +1,147 @@
+/* Tipografía Quicksand */
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+
+/* Paleta de colores */
+:root {
+  --stratos: #001B48;
+  --RBlue: #02457A;
+  --BBlue: #018ABE;
+  --Mglory: #97CADB;
+  --Botticelli: #D6EBEE;
+  --ancho-celdas: 25px;
+  --alto-celdas: 25px;
+}
+
+.matrices {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/* .matriz {} */
+
+.celda-seleccionada {
+  background-color: var(--RBlue);
+  color: var(--Botticelli);
+}
+
+/* Bordes en las tablas */
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: center;
+  min-width: var(--ancho-celdas);
+  min-height: var(--alto-celdas);
+}
+
+/* Estilos generales */
+html, body {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--stratos);
+  background: var(--Mglory);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para las entradas */
+input {
+  border: none;
+  background: none;
+  /* color: white; */
+  font-size: 16px;
+  line-height: 1.5;
+  width: var(--ancho-celdas);
+  text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: var(--stratos);
+  color: var(--Botticelli);
+  padding: 5px;
+  width: 20vw;
+  font-size: 90%;
+  font-family: 'Quicksand', sans-serif;
+}
+
+button:hover {
+  background: var(--RBlue);
+  transition:  0.2s;
+  border-color: var(--Botticelli);
+}
+
+.controles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+}
+
+#status {
+  display: flex;
+  font-size: .90em;
+  padding: 15px;
+  border-radius: 5px;
+  color: white;
+  width: 60vw;
+  background-color: var(--RBlue);
+}
+
+.codigo {
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  font-size: 80%;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: var(--stratos);
+  color: var(--Botticelli);
+}
+
+.codigo-resaltado {
+  background-color: var(--RBlue);
+  color: var(--Botticelli);
+}
+
+.linea {
+  padding: 0px;
+  margin: 0px;
+}
+
+.linea small {
+  font-size: 0.8em;
+  color: var(--Botticelli);
+  padding: 3px;
+  margin-right: 5px;
+}
+
+.contador {
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: var(--stratos);
+  padding: 10px;
+  font-size: 79%;
+}
+
+.linea-contador {
+  width: 80%;
+}

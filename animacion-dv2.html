@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animación - Divide y Vencerás</title>
+    <link rel="stylesheet" href="assets/css/animacion-dv.css" />
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>
+  </head>
+  <body>
+    <h2>Divide y Vencerás <small>Animación</small></h2>
+    <div class="matrices">
+      <div class="contenedor-matriz">
+        <p>Matriz A</p>
+        <table class="matriz" id="matrizA">
+          <tr>
+            <td>
+              <table class="submatriz" id="submatrizA1">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a11"
+                      id="a11"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a12"
+                      id="a12"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a21"
+                      id="a21"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a22"
+                      id="a22"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="submatriz" id="submatrizA2">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a13"
+                      id="a13"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a14"
+                      id="a14"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a23"
+                      id="a23"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a24"
+                      id="a24"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="submatriz" id="submatrizA3">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a31"
+                      id="a31"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a32"
+                      id="a32"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a41"
+                      id="a41"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a42"
+                      id="a42"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="submatriz" id="submatrizA4">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a33"
+                      id="a33"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a34"
+                      id="a34"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a43"
+                      id="a43"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="a44"
+                      id="a44"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="contenedor-matriz">
+        <p>Matriz B</p>
+        <table class="matriz" id="matrizB">
+          <tr>
+            <td>
+              <table class="submatriz" id="submatrizB1">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b11"
+                      id="b11"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b12"
+                      id="b12"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b21"
+                      id="b21"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b22"
+                      id="b22"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="submatriz" id="submatrizB2">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b13"
+                      id="b13"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b14"
+                      id="b14"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b23"
+                      id="b23"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b24"
+                      id="b24"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="submatriz" id="submatrizB3">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b31"
+                      id="b31"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b32"
+                      id="b32"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b41"
+                      id="b41"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b42"
+                      id="b42"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="submatriz" id="submatrizB4">
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b33"
+                      id="b33"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b34"
+                      id="b34"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b43"
+                      id="b43"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                  <td class="borde-negro">
+                    <input
+                      type="number"
+                      name="b44"
+                      id="b44"
+                      min="0"
+                      max="9"
+                      step="1"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="contenedor-matriz">
+        <p>Matriz C</p>
+        <table class="matriz matriz-resultante" id="matrizC">
+          <tr>
+            <td>
+              <table class="submatriz" id="submatrizC1">
+                <tr>
+                  <td id="c11" class="borde-negro"></td>
+                  <td id="c12" class="borde-negro"></td>
+                </tr>
+                <tr>
+                  <td id="c21" class="borde-negro"></td>
+                  <td id="c22" class="borde-negro"></td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="submatriz" id="submatrizC2">
+                <tr>
+                  <td id="c13" class="borde-negro"></td>
+                  <td id="c14" class="borde-negro"></td>
+                </tr>
+                <tr>
+                  <td id="c23" class="borde-negro"></td>
+                  <td id="c24" class="borde-negro"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="submatriz" id="submatrizC3">
+                <tr>
+                  <td id="c31" class="borde-negro"></td>
+                  <td id="c32" class="borde-negro"></td>
+                </tr>
+                <tr>
+                  <td id="c41" class="borde-negro"></td>
+                  <td id="c42" class="borde-negro"></td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="submatriz" id="submatrizC4">
+                <tr>
+                  <td id="c33" class="borde-negro"></td>
+                  <td id="c34" class="borde-negro"></td>
+                </tr>
+                <tr>
+                  <td id="c43" class="borde-negro"></td>
+                  <td id="c44" class="borde-negro"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="info">
+      <div class="columna">
+        <div class="mensaje"></div>
+        <div class="contador-pasos">holi</div>
+        <div class="codigo">
+          <pre>
+  funcion separar(matriz)
+  {
+    n = matriz.filas // asumimos matriz cuadrada
+    regresa matriz[0...n/2, 0...n/2],     // primer cuadrante
+            matriz[n/2+1...n, 0...n/2],   // segundo cuadrante
+            matriz[0...n/2, n/2+1...n],   // tercer cuadrante
+            matriz[n/2+1...n, n/2+1...n]; // cuarto cuadrante
+  }
+  
+  function multiplicar_dv(a,b)
+  {
+    entero {a, b, c, d} = separar(A);
+    entero {a, b, c, d} = separar(B);
+    ae = multiplicar_dv(a,e)
+    bg = multiplicar_dv(b,g)
+    af = multiplicar_dv(a,f)
+    bh = multiplicar_dv(b,h)
+    ce = multiplicar_dv(c,e)
+    dg = multiplicar_dv(d,g)
+    cf = multiplicar_dv(c,f)
+    dh = multiplicar_dv(d,h)
+    c11 = p1 + p2 - p3 + p4
+    c12 = p5 + p3
+    c21 = p6 + p2
+    c22 = p5 + p1 - p6 - p7
+    c = ((c11,c12),(c21,c22))
+  }
+          </pre>
+        </div>
+      </div>
+      <div class="controles">
+        <button id="siguiente">Iniciar</button>
+      </div>
+    </div>
+
+ 
+    <!-- Scripts de ejecución -->
+    <script src="assets/js/animacion-dv2.js"></script>
+  </body>
+</html>

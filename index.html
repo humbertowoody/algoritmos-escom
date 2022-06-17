@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Metadatos de ajuste de cliente web -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Multiplicación de Matrices de Strassen</title>
+
+    <!-- Sección de metadatos -->
+    <meta
+      name="description"
+      content="Página que explica el uso y funcionamiento del Algoritmo de Multicplicación de Matrices de Strassen"
+    />
+    <meta
+      name="author"
+      content="Santos Méndez Ulises Jesús, Vallejo García Alan Gerardo, Ortega Alcocer Humberto Alejandro"
+    />
+
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Estilos para la página -->
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="assets/css/tema-escom.css" />
+
+    <!-- Tema para resaltar el código -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section id="inicio">
+          <!-- Sección para la presentación del equipo y proyecto -->
+          <section id="portada">
+            <img src="assets/img/logo-escom.png" alt="ESCOM" style="max-height: 130px;">
+            <img src="assets/img/logo-ipn.webp" alt="IPN" style="max-height: 130px;">
+            <h3>Multiplicación de Matrices de Strassen</h3>
+            <hr />
+            <p>Optimizaciones galácticas.</p>
+            <p>
+              <small
+                >Escuela Superior de Cómputo del Instituto Politécnico
+                Nacional</small
+              >
+            </p>
+          </section>
+          <section id="equipo">
+            <h3>Súper Equipo 🦸🏻‍♂️</h3>
+            <p>
+              <ul>
+                <li>Alan Gerardo Vallejo García.</li>
+                <li>Ulises Jesús Santos Méndez.</li>
+                <li>Humberto Alejandro Ortega Alcocer.</li>
+              </ul>
+            </p>
+            <hr>
+            <p>Análisis de Algoritmos | 3CM14</p>
+            <p></p>
+            <small
+              >M. Edgardo Adrián Franco Martínez.</small
+            >
+            <p>👉</p>
+          </section>
+        </section>
+        <section id="indice">
+          <h3>Índice</h3>
+          <ul>
+            <li>Matrices, un vistazo histórico.</li>
+            <li>Multiplicar matrices (fuerza bruta).</li>
+            <li>Divide y Vencerás.</li>
+            <li>Optimización de Strassen.</li>
+            <li>Bibliografía</li>
+          </ul>
+          <p>👉</p>
+        </section>
+        <section id="historia">
+          <!-- Sección para la historia y antecedentes -->
+          <section id="historia-intro">
+            <h3>Matrices, un vistazo histórico.</h3>
+            <p>👇</p>
+          </section>
+          <section id="historia-origen">
+            <h3>¿De dónde vienen las matrices?</h3>
+            <p>
+              Las matrices tienen muchos años de existir y ser analizadas,
+               los <b>cuadros mágicos</b> y <b>cuadros latinos</b> datan (según la literatura china) del <b>650 a.C.</b>
+            </p>
+            <img src="assets/img/matriz.gif" alt="Matriz">
+          </section>
+          <section id="historia-personalidades">
+            <p>Algunas personalidades que han contribuído al estudio de matrices:</p>
+            <p>
+              <b>Jiu Zhang Suan Shu</b>, 
+              <b>Seki Kōwa</b>, 
+              <b>Gottfried Leibniz</b>, 
+              <b>Cramer</b>, 
+              <b>Gauss</b>, 
+              <b>Willhelm Jordan</b>, 
+              <b>Hamilton</b>, 
+              <b>Von Neumann</b>, 
+              <b>Frobenius</b> y
+              <b>Heisenberg</b>.
+            </p>
+          </section>
+          <section id="historia-operaciones">
+            <h3>Operaciones con matrices</h3>
+            <p>
+              Las matrices cuentan con <b>todas las operaciones</b> definidas por el álgebra matricial,
+              es decir, podemos realizar:
+            </p>
+            <ul>
+              <li>Suma.</li>
+              <li>Diferencia.</li>
+              <li><b>Producto</b>, <em>(la operación crucial de este algoritmo)</em>.</li>
+              <li>Cociente.</li>
+              <li>etcétera...</li>
+            </ul>
+            <p>👉</p>
+          </section>
+        </section>
+        <section id="fuerza-bruta">
+          <!-- Sección para hablar de la fuerza bruta y optimizaciones-->
+          <section id="fuerza-bruta-inicio">
+            <h3>Multiplicar Matrices</h3>
+            <p>Algoritmo <em>directo</em> o por <em>fuerza bruta</em>.</p>
+            <p>👇</p>
+          </section>
+          <section id="fuerza-bruta-definicion">
+            En la <b>multiplicación de matrices</b>, cada entrada en la matriz producto es el producto punto de un renglón en la primera matriz por una columna en la segunda matriz.
+          </section>
+          <section id="fuerza-bruta-procedimiento">
+            <p>
+              Procedimiento de la operación.
+            </p>
+            <video data-autoplay src="assets/video/multiplicacion-matrices.mp4"></video>
+          </section>
+          <section id="fuerza-bruta-pseudocodigo">
+            La operación de <em>multiplicación</em> se puede encapsular en el siguiente pseudocódigo:
+            <pre><code class="hljs" data-trim data-line-numbers data-no-escape>
+              procedimiento multiplicar_matrices(A,B)
+                entrada A,B, matrices de n*n
+                salida C, matriz de n*n
+              inicio
+                para i = 0, hasta n-1, incrementando en 1
+                  para j = 0, hasta n-1, incrementando en 1
+                    C[i,j] = 0; // inicializamos matriz resultante en 0.
+                  fin para
+                fin para
+
+                para i = 0, hasta n-1, incrementando en 1
+                  para j = 0, hasta n-1, incrementando en 1
+                    para k = 0, hasta n-1, incrementando en 1
+                      C[i,j] = C[i,j] + A[i,k] * B[k,j] // producto matricial.
+                    fin para
+                  fin para
+                fin para
+              fin multiplicar_matrices
+            </code></pre>
+          </section>
+          <section id="fuerza-bruta-analisis-complejidad">
+            <p>
+              Aquí, será fácil obtener el orden de la complejidad temporal de nuestro algoritmo ya que
+              tenemos tres ciclos anidados de orden lineal. Lo cual resulta en:
+            </p>
+            <p>\[O(n*n*n) = O(n^3)\]</p>
+            <pre><code class="hljs" data-trim data-line-numbers data-no-escape data-ln-start-from="11">
+                para i = 0, hasta n-1, incrementando en 1
+                  para j = 0, hasta n-1, incrementando en 1
+                    para k = 0, hasta n-1, incrementando en 1
+                      C[i,j] = C[i,j] + A[i,k] * B[k,j] // producto matricial.
+                    fin para
+                  fin para
+                fin para
+            </code></pre>
+          </section>
+          <section id="fuerza-bruta-codigo">
+            Realizando la implementación del algoritmo <em>de fuerza bruta o directo</em> en
+            JavaScript, tendríamos el siguiente código:
+            <pre><code class="hljs" data-trim data-line-numbers data-no-escape>
+              function multiplicar_matrices(a, b) {
+                let numFilasA = a.length, numColsA = a[0].length,
+                    numColsB = b[0].length,
+                    m = new Array(numFilasA);
+                for (var fila = 0; fila < numFilasA; ++fila) {
+                  m[fila] = new Array(numColsB); // crear fila
+                  for (var columna = 0; columna < numColsB; ++columna) {
+                    m[fila][columna] = 0; // inicializar celda
+                    for (var i = 0; i < numColsA; ++i) {
+                      m[fila][columna] += a[fila][i] * b[i][columna];
+                    }
+                  }
+                }
+                return m;
+              }
+            </code></pre>
+          </section>
+          <section id="fuerza-bruta-animacion">
+            <p>
+              Prueba a introducir los valores que quieras, o utiliza los aleatorios, para probar
+              cómo se verían las operaciones paso a paso de este algoritmo:
+            </p>
+            <iframe data-src="animacion-fb.html" class="animacion-incrustada"></iframe>
+            <p>👉</p>
+          </section>
+        </section>
+        <section id="divide-y-venceras">
+          <!-- Sección para hablar de la propuesta con Divide y Vencerás -->
+          <section id="divide-y-venceras-inicio">
+            <h3>Divide y Vencerás</h3>
+            <p>¿Cómo atacar nuestro problema de forma que podamos simplificarlo?</p>
+            <p>👇</p>
+          </section>
+          <section id="divide-y-venceras-definicion">
+            <p>
+              Divide y Vencerás es un paradigma de resolución de problemas que se basa en
+              tomar un problema grande y <b>descomponerlo en problemas más pequeños</b> dónde la
+              solución inmediata es evidente, o al menos más de lo que sería para el problema
+              inicial.
+            </p>
+            <img src="assets/img/divide-y-venceras.gif" alt="Divide y Vencerás" style="max-height: 25vh;">
+          </section>
+          <section id="divide-y-venceras-enfoque-general">
+            <p>
+              En su forma más general, un algoritmo <em>divide y vencerás</em> consiste
+              en tres pasos simples:
+            </p>
+            <ol>
+              <li>Separar el problema en sub-problemas hasta llegar a su forma más simple.</li>
+              <li>Resolver los problemas <em>simplificados</em>.</li>
+              <li>Combinar las soluciones parciales de vuelta en la solución general.</li>
+            </ol>
+            
+          </section>
+          <section id="divide-y-venceras-aplicacion">
+            Aplicándolo a la <em>multiplicación de matrices</em>, lo primero que analizaremos
+            serán las <b>dimensiones</b> de una matriz.
+            \[m \times n\]
+            La <b>multiplicación</b> tiene la restricción de que el <em>número de filas</em>
+            de la primer matriz debe ser el <em>número de columnas</em> de la segunda matriz.
+          </section>
+          <section id="divide-y-venceras-dividir">
+            <h3>Dividiendo</h3>
+            <p>
+              Sabiendo eso, nuestro primer paso será tratar de, recursivamente, dividir nuestras
+              matrices iniciales en sub-matrices hasta llegar a un caso base de matrices:
+            </p>
+            \[m \times n = 2 \times 2\]
+          </section>
+          <section id="divide-y-venceras-caso-base">
+            <h3>Caso Base</h3>
+            <p>
+              Llegado al caso base (matrices de 2x2), entonces realizaremos
+              las operaciones pertinentes para obtener el producto, de la siguiente manera:
+            </p>
+            <img src="assets/img/multiplicar-matrices.png" alt="Multiplicación de Matrices">
+          </section>
+          <section id="divide-y-venceras-reensamble">
+            <h3>Reensamblado</h3>
+            <p>
+              Para <em>reensamblar</em> los resultados parciales de nuestra recursividad,
+              realizaremos el producto de los resultados.
+            </p>
+            <img src="assets/img/reensamble-matrices-dv.png" alt="Reensamblado de Matrices" style="max-height: 40vh;">
+          </section>
+          <section id="divide-y-venceras-pseudocodigo">
+            Pseudocódigo de <em>divide y vencerás</em>:
+            <pre><code class="hljs" data-trim data-line-numbers data-no-escape>
+              procedimiento multiplicar_matrices_dv(A,B)
+                si A.columnas = 1, entonces // caso base
+                  regresa C[0,0] = A[0,0] * B[0,0]
+                fin si
+                // recursividad
+                ae = multiplicar_matrices_dv(A/4[0], B/4[0]) // 1
+                bg = multiplicar_matrices_dv(A/4[1], B/4[2]) // 2
+                af = multiplicar_matrices_dv(A/4[0], B/4[1]) // 3
+                bh = multiplicar_matrices_dv(A/4[1], B/4[3]) // 4
+                ce = multiplicar_matrices_dv(A/4[2], B/4[0]) // 5
+                dg = multiplicar_matrices_dv(A/4[3], B/4[2]) // 6
+                cf = multiplicar_matrices_dv(A/4[2], B/4[1]) // 7
+                dh = multiplicar_matrices_dv(A/4[3], B/4[3]) // 8
+                C[0,0] = ae + bg // La suma en caso base será O(n^2) para
+                C[0,1] = af + bh // matrices de dimensiones mayor a dos.
+                C[1,0] = ce + dg
+                C[1,1] = cf + dh
+                regresa C
+              fin multiplicar_matrices_dv
+            </code></pre>
+          </section>
+          <section id="divide-y-venceras-complejidad">
+            <p>
+              Las llamadas recursivas del código anterior, mediante un análisis de <em>Teorema Maestro</em>
+              nos llevan a la conclusión de que nuestro algoritmo tiene una complejidad de:
+            </p>
+            \[T(n) = 8T(n/2) + O(n^2) = O(n^{log_2{(8)}}) = O(n^3)\]
+            <p>Así, nuestra complejidad realmente no se vió reducida.</p>
+          </section>
+          <section>
+            A continuación podrás introducir dos matrices con valores enteros positivos y ver el paso a
+            paso del procedimiento en divide y vencerás.
+          </section>
+          <section id="divide-y-venceras-animacion" data-background-iframe="animacion-dv.html" data-background-interactive></section>
+        </section>
+        <section id="strassen">
+          <!-- Sección para hablar de Strassen puntualmente -->
+          <section id="strassen-inicio">
+            <h3>Optimización de Strassen</h3>
+            <p>Más allá de <em>divide y vencerás</em>, para datos <b>galácticos</b>.</p>
+            <p>👇</p>
+          </section>
+          <section id="strassen-biografia">
+            <img src="assets/img/volker-strassen.jpeg" alt="Volker Strassen" style="max-height: 200px;">
+            <p>
+              <b>Volker Strassen</b> es un matemático Alemán nacido en 1936, ha recibido
+              múltiples premios y distinciones gracias al descubrimiento del <em>algoritmo
+              de multiplicación de matrices más rápido</em>, multiplicación de números grandes
+              y determinación probabilística de números primos (entre otros).
+            </p>
+          </section>
+          <section id="strassen-historia">
+            <h3>Multiplicación de Matrices de Strassen</h3>
+            <p>
+              En 1969, <b>Volker Strassen</b> publicó el algoritmo de multiplicación de matrices
+              de nombre propio con el que demostró que se pueden hayar mejores resultados aún 
+              en situaciones dónde es común dejar de buscar mejores caminos.
+            </p>
+          </section>
+          <section id="strassen-complejidad">
+            <p>
+              Como vimos anteriormente en el análisis <em>divide y vencerás</em>, se requieren 8 pasos
+              recursivos para realizar los cálculos necesarios. <b>Strassen</b> demostró que es posible
+              realizar únicamente <b>7 pasos recursivos</b>, mejorando así la complejidad de:
+            </p>
+            \[O(n^{log_2{(8)}}) = O(n^3)\]
+            <p>a una <em>poco menos</em> elevada de:</p>
+            \[O(n^{log_2{(7)}}) \approx O(n^{2.807})\]
+          </section>
+          <section id="strassen-galactico">
+            <p>
+              Cuando un algoritmo será eficaz para valores de n <em>muy</em> grandes, se le denomina
+              <b>algoritmo galáctico</b>. El algoritmo de <em>Strassen</em> es considerado uno de ellos
+              ya que su aplicación es útil para <em>datasets</em> de dimensiones enormes.
+            </p>
+            <img src="assets/img/comparativa-strassen.png" alt="Comparativa entre complejidades" style="max-height: 40vh; border: 1px solid black; border-radius: 10px;">
+          </section>
+          <section id="strassen-operaciones">
+            <p>Considerando las matrices:</p>
+            <img src="assets/img/ops-strassen-1.gif" alt="Matrices de Operaciones Strassen">
+            <p>
+              Las operaciones en cuestión son:
+            </p>
+            <img src="assets/img/ops-strassen.gif" alt="Operaciones Strassen">
+          </section>
+          <section id="strassen-aplicaciones">
+            <p>
+              Existen muchas áreas dónde la multiplicación de matrices es utilizada, sin embargo, para que 
+              el algoritmo de <em>Strassen</em> merezca la pena de ser usado, vimos que será en matrices <em>muy</em>
+              grandes, por lo que su uso actual reside principalmente en:
+            </p>
+            <ul>
+              <li>Máscaras para manipulación de imágenes.</li>
+              <li>Transformaciones de objetos en 2 y 3 dimensiones.</li>
+              <li>Cambios de perspectivas con matrices de transformaciones.</li>
+            </ul>
+          </section>
+          <section id="strassen-pseudocodigo">
+            Pseudocódigo del algoritmo de <em>Strassen</em>:
+            <pre><code class="hljs" data-trim data-line-numbers data-no-escape>
+              STRASSEN(A, B)
+                n = A.filas
+                si n = 1, entonces
+                    return a[1, 1] * b[1, 1]
+                fin si
+                declara C matriz de n x n
+                A[1, 1] = A[1..n / 2][1..n / 2]
+                A[1, 2] = A[1..n / 2][n / 2 + 1..n]
+                A[2, 1] = A[n / 2 + 1..n][1..n / 2]
+                A[2, 2] = A[n / 2 + 1..n][n / 2 + 1..n]
+                B[1, 1] = B[1..n / 2][1..n / 2]
+                B[1, 2] = B[1..n / 2][n / 2 + 1..n]
+                B[2, 1] = B[n / 2 + 1..n][1..n / 2]
+                B[2, 2] = B[n / 2 + 1..n][n / 2 + 1..n]
+                S[1] = B[1, 2] - B[2, 2]
+                S[2] = A[1, 1] + A[1, 2]
+                S[3] = A[2, 1] + A[2, 2]
+                S[4] = B[2, 1] - B[1, 1]
+                S[5] = A[1, 1] + A[2, 2]
+                S[6] = B[1, 1] + B[2, 2]
+                S[7] = A[1, 2] - A[2, 2]
+                S[8] = B[2, 1] + B[2, 2]
+                S[9] = A[1, 1] - A[2, 1]
+                S[10] = B[1, 1] + B[1, 2]
+                P[1] = STRASSEN(A[1, 1], S[1])
+                P[2] = STRASSEN(S[2], B[2, 2])
+                P[3] = STRASSEN(S[3], B[1, 1])
+                P[4] = STRASSEN(A[2, 2], S[4])
+                P[5] = STRASSEN(S[5], S[6])
+                P[6] = STRASSEN(S[7], S[8])
+                P[7] = STRASSEN(S[9], S[10])
+                C[1..n / 2][1..n / 2] = P[5] + P[4] - P[2] + P[6]
+                C[1..n / 2][n / 2 + 1..n] = P[1] + P[2]
+                C[n / 2 + 1..n][1..n / 2] = P[3] + P[4]
+                C[n / 2 + 1..n][n / 2 + 1..n] = P[5] + P[1] - P[3] - P[7]
+                regresa C
+            </code></pre>
+          </section>
+          <section id="strassen-animacion" data-background-iframe="animacion-strassen.html" data-background-interactive></section>
+        </section>
+        <section id="bibliografia-y-creditos">
+          <section id="bibliografia">
+            <h3>Bibliografía</h3>
+            <ul>
+              <li>Cormen, T., Leiserson, C., Rivest, R., & Stein, C. (2009). Introduction to algorithms (3.a ed.). The MIT Press.</li>
+              <li>Penttonen, M. (1978). Complejidad de los algoritmos. En Complejidad de los algoritmos (pp. 15–25). Universidad de Madrid.</li>
+            </ul>
+          </section>
+          <section id="creditos-tecnicos">
+            <h3>Librerías y recursos</h3>
+            <ul>
+              <li><b>RevealJS</b>: para el formato de presentación del sitio.</li>
+              <li><b>Google Fonts</b>: para las tipografías empleadas.</li>
+              <li><b>jQuery</b>: para las animaciones.</li>
+            </ul>
+          </section>
+        </section>
+        <section id="fin">
+          <h3>¡Eso es todo!</h3>
+          <p>Puedes usar las flechas para regresar a la parte que más te haya gustado, también puedes <a href="#">hacer click aquí para volver al inicio</a>.</p>
+          <img src="assets/img/logo-escom.png" alt="ESCOM" style="max-height: 130px;">
+          <img src="assets/img/logo-ipn.webp" alt="IPN" style="max-height: 130px;">
+        </section>
+      </div>
+    </div>
+
+    <!-- Scripts para la página  -->
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <script>
+      // Inicializamos Reveal.js el cual gestiona los "slides" de nuestra presentación.
+      Reveal.initialize({
+        hash: true,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX],
+      });
+    </script>
+  </body>
+</html>

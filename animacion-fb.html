@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animación Fuerza Bruta - Multiplicación de Matrices</title>
+    <link rel="stylesheet" href="/assets/css/animacion.css" />
+  </head>
+  <body>
+    <div class="matrices">
+      <div class="matriz">
+        <h3>Matriz A</h3>
+        <table id="matrizA">
+          <tr>
+            <td>
+              <input type="number" id="a11" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="a12" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="a13" class="entrada" min="0" max="9" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="number" id="a21" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="a22" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="a23" class="entrada" min="0" max="9" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="number" id="a31" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="a32" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="a33" class="entrada" min="0" max="9" />
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="matriz">
+        <h3>Matriz B</h3>
+        <table id="matrizB">
+          <tr>
+            <td>
+              <input type="number" id="b11" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="b12" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="b13" class="entrada" min="0" max="9" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="number" id="b21" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="b22" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="b23" class="entrada" min="0" max="9" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="number" id="b31" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="b32" class="entrada" min="0" max="9" />
+            </td>
+            <td>
+              <input type="number" id="b33" class="entrada" min="0" max="9" />
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="matriz">
+        <h3>Resultado</h3>
+        <table id="matrizC">
+          <tr>
+            <td id="c11">0</td>
+            <td id="c12">0</td>
+            <td id="c13">0</td>
+          </tr>
+          <tr>
+            <td id="c21">0</td>
+            <td id="c22">0</td>
+            <td id="c23">0</td>
+          </tr>
+          <tr>
+            <td id="c31">0</td>
+            <td id="c32">0</td>
+            <td id="c33">0</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="controles">
+      <p id="status">
+        Rellena las matrices para inciar, se rellenarán las celdas vacías con
+        valores aleatorios.
+      </p>
+      <div class="contador">
+        <div class="linea-contador" id="lineaContador1">
+          Contador de pasos: 0
+        </div>
+        <div class="linea-contador" id="lineaContador2">Fila: 0</div>
+        <div class="linea-contador" id="lineaContador3">Columna: 0</div>
+        <div class="linea-contador" id="lineaContador4">Iteracion: 0</div>
+      </div>
+    </div>
+    <div class="controles">
+      <pre class="codigo">
+        <div class="linea" id="linea1"><small>01</small>para i desde 1 hasta n</div>
+        <div class="linea" id="linea2"><small>02</small>  para j desde 1 hasta n</div>
+        <div class="linea" id="linea3"><small>03</small>    para k desde 1 hasta n</div>
+        <div class="linea" id="linea4"><small>04</small>      resultado[i,j] = resultado[i,j] + (a[i,k] * b[k,j])</div>
+      </pre>
+      <button id="siguiente">Comenzar</button>
+    </div>
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/animacion-fb.js"></script>
+  </body>
+</html>
