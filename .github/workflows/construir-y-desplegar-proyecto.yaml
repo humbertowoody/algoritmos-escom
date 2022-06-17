@@ -4,7 +4,7 @@ name: Construir y Desplegar un sitio en GitHub Pages
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   # Construir el sitio y desplegarlo en github pages.
