@@ -28,7 +28,7 @@
     "presentation"
   ],
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.19.0",
     "@babel/eslint-parser": "^7.14.3",
     "@babel/preset-env": "^7.18.2",
     "@rollup/plugin-babel": "^5.3.0",
